@@ -99,5 +99,3 @@ temp = open(clone + "\\code\\data.py", "x")
 for v in temp1:
     temp.write(v + "\n")
 temp.close()
-if selPrompt(["Yes", "No"], [">", ">"], "Would you like to open the alternitive environment now?") == 0:
-    runpy.run_path(clone + "\\code\\__main__.py")
