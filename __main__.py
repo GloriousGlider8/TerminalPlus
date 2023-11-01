@@ -13,6 +13,7 @@ import sys
 ENVI = d.env
 LINE_UP = '\033[1A'
 LINE_CLEAR = '\x1b[2K'
+VER = d.ver
 
 ip = socket.gethostbyname(socket.gethostname())
 found = None
@@ -151,10 +152,10 @@ about = """
 
 --- About Terminal + ---
 
-    Version: NT_10+11_1.0.6_py3.10.11_usr
+    Version: NT_10+11_{18}_py3.10.11_usr
     System: NT
     System Version: Windows 10 / 11
-    Terminal + Software Version: 1.0.6
+    Terminal + Software Version: {18}
     Intended Python Interpreter Version: {13}3.10.11{15}
     Current Python Interpreter Version: {13}{14}{15}
     Terminal + Installation Type: User Account
@@ -188,7 +189,7 @@ NOTE: None of this is ever sent without your consent!
 **************************************************
 
 --- Terminal + ---
-""".format(os.getenv("USERNAME"), os.getenv("USERPROFILE"), os.getenv("APPDATA"), os.getenv("USERDOMAIN"), os.getenv("COMPUTERNAME"), os.getenv("SYSTEMDRIVE"), os.getenv("NUMBER_OF_PROCESSORS"), os.getenv("PROCESSOR_ARCHITECTURE"), os.getenv("PROCESSOR_IDENTIFIER"), os.getenv("PROCESSOR_LEVEL"), str(os.cpu_count()), ip, lip, temp, ".".join(temp2), c.Style.RESET_ALL, homePath, ENVI)
+""".format(os.getenv("USERNAME"), os.getenv("USERPROFILE"), os.getenv("APPDATA"), os.getenv("USERDOMAIN"), os.getenv("COMPUTERNAME"), os.getenv("SYSTEMDRIVE"), os.getenv("NUMBER_OF_PROCESSORS"), os.getenv("PROCESSOR_ARCHITECTURE"), os.getenv("PROCESSOR_IDENTIFIER"), os.getenv("PROCESSOR_LEVEL"), str(os.cpu_count()), ip, lip, temp, ".".join(temp2), c.Style.RESET_ALL, homePath, ENVI, VER)
 
 print("--- Terminal + ---")
 
