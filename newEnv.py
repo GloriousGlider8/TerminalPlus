@@ -72,7 +72,6 @@ else:
 
 print()
 
-os.mkdir(clone)
 os.mkdir(clone + "\\data")
 temp = open(clone + "\\data\\addonsdef.json", "x")
 temp.write("[]")
