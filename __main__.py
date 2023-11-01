@@ -1,4 +1,4 @@
-ENVI = "INST-1"
+import data as d
 import os
 import runpy
 import json
@@ -10,6 +10,7 @@ import keyboard as k
 import colorama as c
 import sys
 
+ENVI = d.env
 LINE_UP = '\033[1A'
 LINE_CLEAR = '\x1b[2K'
 

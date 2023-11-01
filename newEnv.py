@@ -1,4 +1,5 @@
 import os
+import data as d
 import colorama as c
 import keyboard as k
 import time
@@ -53,13 +54,14 @@ LINE_UP = '\033[1A'
 LINE_CLEAR = '\x1b[2K'
 
 clone = input("[directory] Environment Directory: ")
+name = input("[string] (W/OUT Spaces) (DIR Name) Environment Name: ")
 
 while not os.path.isdir(clone):
     print(c.Fore.RED + "Not a valid directory.\n" + c.Style.RESET_ALL)
     clone = input("[directory] Environment Directory: ")
 
-if os.path.exists(os.path.join(os.getenv("APPDATA"), "TerminalPlus", "PATH")):
-    homePathTxt = open(os.path.join(os.getenv("APPDATA"), "TerminalPlus", "PATH"))
+if os.path.exists(os.path.join(os.getenv("APPDATA"), "TerminalPlus", d.env, "PATH")):
+    homePathTxt = open(os.path.join(os.getenv("APPDATA"), "TerminalPlus",d.env , "PATH"))
     homePath = homePathTxt.read()
     homePathTxt.close()
     homePathTxt = None
@@ -71,5 +73,18 @@ else:
 print()
 
 os.system("copy \"" + homePath + "\" \"" + clone + "\"")
+os.mkdir(os.getenv("AppData") + "\\TerminalPlus\\" + name)
+temp = open(os.getenv("AppData") + "\\TerminalPlus\\" + name + "\\PATH", "x")
+temp.write(clone)
+temp.close()
+temp = open(clone + "\\code\\data.py")
+temp1 = temp.readlines()
+temp.close()
+temp[0] = "env = \"" + name + "\""
+os.remove(clone + "\\code\\data.py")
+temp = open(clone + "\\code\\data.py", "x")
+for v in temp1:
+    temp.write(v)
+temp.close()
 if selPrompt(["Yes", "No"], [">", ">"], "Would you like to open the alternitive environment now?") == 0:
     runpy.run_path(clone + "\\code\\__main__.py")
