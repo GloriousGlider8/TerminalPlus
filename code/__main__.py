@@ -89,10 +89,7 @@ os.system("@echo off")
 os.system("cls")
 
 def cmdExists(cmd):
-    if os.system("cmd /c \"(help {0} > nul || exit 0) && where {0} > nul 2> nul\"".format(cmd)) == 0:
-        return True
-    else:
-        return False
+    return os.system("cmd /c \"(help {0} > nul || exit 0) && where {0} > nul 2> nul\"".format(cmd)) == 0
 
 if not cmdExists("python"):
     if selPrompt(["Yes", "No"], [">", ">"], "You do not have python installed correctly on your computer.\nUsing addons and other features requires python.\nWould you like to install it?") == 0:
@@ -152,12 +149,14 @@ about = """
 
 --- About Terminal + ---
 
-Version: NT-w10.11-v1.0.2-py3.10.11
+Version: NT_10+11_1.0.6_py3.10.11_usr
     System: NT
     System Version: Windows 10 / 11
     Terminal + Software Version: 1.0.6
     Intended Python Interpreter Version: {13}3.10.11{15}
-    System Python Interpreter Version: {13}{14}{15}
+    Current Python Interpreter Version: {13}{14}{15}
+    Terminal + Installation Type: User Account
+    Terminal + HOME: {16}
 
 --- About Your Profile ---
 
@@ -180,8 +179,8 @@ CPU Count: {10}
 
 NOTE: None of this is ever sent without your consent!
 
-(Stored in termP.log) IP: {11}
-(Stored in li) Last IP: {12}
+(Stored in data\\termP.log) IP: {11}
+(Stored in data\\li) Last IP: {12}
 
 **************************************************
 
