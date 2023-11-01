@@ -62,7 +62,7 @@ def selPrompt(options, icons, intro):
             return temp
 
 if os.path.exists(os.path.join(os.getenv("APPDATA"), "TerminalPlus", ENVI, "PATH")):
-    homePathTxt = open(os.path.join(os.getenv("APPDATA"), "TerminalPlus", "ENVI", "PATH"))
+    homePathTxt = open(os.path.join(os.getenv("APPDATA"), "TerminalPlus", ENVI, "PATH"))
     homePath = homePathTxt.read()
     homePathTxt.close()
     homePathTxt = None
