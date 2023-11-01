@@ -636,7 +636,10 @@ while True:
                     inst = input("[directory] Installation directory to open: ")
                 else:
                     temp = open(os.getenv("AppData") + "\\TerminalPlus\\" + inst + "\\PATH")
+                    print("inst = " + inst)
                     inst = temp.read()
+                    print("inst = " + inst)
+                    os.system("timeout /t -1")
                     temp.close()
                 
                 runpy.run_path(inst + "\\code\\__main__.py")
