@@ -6,6 +6,11 @@ __pycache__/
 # VS Code
 .vscode/
 
+# Terminal +
+data/
+res/
+bin/
+
 # C extensions
 *.so
 
