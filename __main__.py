@@ -624,10 +624,22 @@ while True:
             elif args[1] == "clear":
                 print("Cleared the logs")
                 clearLog()
-        elif args[0] == "dev":
-            print("\n--- Development Environment Setup ---\n")
-            if selPrompt(["Yes", "No"], [">", "<"], "Are you sure you would like to setup a new environment?") == 0:
-                runpy.run_path(homePath + "\\code\\newEnv.py")
+        elif args[0] == "inst":
+            if args[1] == "new":
+                print("\n--- Installation Setup ---\n")
+                if selPrompt(["Yes", "No"], [">", "<"], "Are you sure you would like to setup a new installation?") == 0:
+                    runpy.run_path(homePath + "\\code\\newEnv.py")
+                print("\n--- Terminal + ---\n")
+            elif args[1] == "open":
+                inst = input("[string] (Leave blank to open with directory) Installation name to open: ")
+                if inst == "":
+                    inst = input("[directory] Installation directory to open: ")
+                else:
+                    temp = open(os.getenv("AppData") + "\\TerminalPlus\\" + inst + "\\PATH")
+                    inst = temp.read()
+                    temp.close()
+                
+                runpy.run_path(inst + "\\code\\__main__.py")
         else:
             found = False
             temp = open(homePath + "\\data\\addonsdef.json")
