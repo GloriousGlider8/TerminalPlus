@@ -187,7 +187,7 @@ NOTE: None of this is ever sent without your consent!
 **************************************************
 
 --- Terminal + ---
-""".format(os.getenv("USERNAME"), os.getenv("USERPROFILE"), os.getenv("APPDATA"), os.getenv("USERDOMAIN"), os.getenv("COMPUTERNAME"), os.getenv("SYSTEMDRIVE"), os.getenv("NUMBER_OF_PROCESSORS"), os.getenv("PROCESSOR_ARCHITECTURE"), os.getenv("PROCESSOR_IDENTIFIER"), os.getenv("PROCESSOR_LEVEL"), str(os.cpu_count()), ip, lip, temp, ".".join(temp2), c.Style.RESET_ALL, ENVI)
+""".format(os.getenv("USERNAME"), os.getenv("USERPROFILE"), os.getenv("APPDATA"), os.getenv("USERDOMAIN"), os.getenv("COMPUTERNAME"), os.getenv("SYSTEMDRIVE"), os.getenv("NUMBER_OF_PROCESSORS"), os.getenv("PROCESSOR_ARCHITECTURE"), os.getenv("PROCESSOR_IDENTIFIER"), os.getenv("PROCESSOR_LEVEL"), str(os.cpu_count()), ip, lip, temp, ".".join(temp2), c.Style.RESET_ALL, homePath, ENVI)
 
 print("--- Terminal + ---")
 
