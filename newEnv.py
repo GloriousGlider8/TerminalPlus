@@ -93,7 +93,7 @@ temp.close()
 temp = open(clone + "\\code\\data.py")
 temp1 = temp.readlines()
 temp.close()
-temp[0] = "env = \"" + name + "\""
+temp1[0] = "env = \"" + name + "\""
 os.remove(clone + "\\code\\data.py")
 temp = open(clone + "\\code\\data.py", "x")
 for v in temp1:
