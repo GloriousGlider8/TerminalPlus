@@ -152,15 +152,15 @@ about = """
 
 --- About Terminal + ---
 
-    Version: NT_10+11_{18}_py3.10.11_usr
+Version: NT_10+11_{18}_py3.10.11_usr
     System: NT
     System Version: Windows 10 / 11
     Terminal + Software Version: {18}
     Intended Python Interpreter Version: {13}3.10.11{15}
     Current Python Interpreter Version: {13}{14}{15}
     Terminal + Installation Type: User Account
-    Terminal + HOME: {16}
-    Environment: {17}
+Terminal + HOME: {16}
+Environment: {17}
 
 --- About Your Profile ---
 
