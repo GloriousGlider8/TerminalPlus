@@ -639,9 +639,7 @@ while True:
                     inst = temp.read()
                     temp.close()
                 
-                os.chdir(inst + "\\code")
-                runpy.run_path(inst + "\\code\\__main__.py")
-                os.chdir(homePath + "\\code")
+                os.system("tplus /I \"" + inst + "\"")
             elif args[1] == "del":
                 if selPrompt([c.Fore.YELLOW + "Yes" + c.Style.RESET_ALL, "No"], ["!", "<"], "Are you sure you want to delete an installation?") == 0:
                     print(c.Fore.BLUE + "Hint: MAIN is the installation that starts up and is installed by deafult." + c.Style.RESET_ALL)
@@ -660,6 +658,8 @@ while True:
                                     raise Exception("User failed to enter installation name.")
                         os.system("rmdir \"" + inst + "\" /S /Q")
                         os.system("rmdir " + os.getenv("AppData") + "\"\\TerminalPlus\\" + instN + "\" /S /Q")
+                        print("Removed Installation")
+                        os.system("cls")
         else:
             found = False
             temp = open(homePath + "\\data\\addonsdef.json")
