@@ -1,3 +1,4 @@
+ENVI = "INST-1"
 import os
 import runpy
 import json
@@ -60,8 +61,8 @@ def selPrompt(options, icons, intro):
             os.system("cls")
             return temp
 
-if os.path.exists(os.path.join(os.getenv("APPDATA"), "TerminalPlus", "PATH")):
-    homePathTxt = open(os.path.join(os.getenv("APPDATA"), "TerminalPlus", "PATH"))
+if os.path.exists(os.path.join(os.getenv("APPDATA"), "TerminalPlus", ENVI, "PATH")):
+    homePathTxt = open(os.path.join(os.getenv("APPDATA"), "TerminalPlus", "ENVI", "PATH"))
     homePath = homePathTxt.read()
     homePathTxt.close()
     homePathTxt = None
@@ -149,7 +150,7 @@ about = """
 
 --- About Terminal + ---
 
-Version: NT_10+11_1.0.6_py3.10.11_usr
+    Version: NT_10+11_1.0.6_py3.10.11_usr
     System: NT
     System Version: Windows 10 / 11
     Terminal + Software Version: 1.0.6
@@ -157,6 +158,7 @@ Version: NT_10+11_1.0.6_py3.10.11_usr
     Current Python Interpreter Version: {13}{14}{15}
     Terminal + Installation Type: User Account
     Terminal + HOME: {16}
+    Environment: {17}
 
 --- About Your Profile ---
 
@@ -185,7 +187,7 @@ NOTE: None of this is ever sent without your consent!
 **************************************************
 
 --- Terminal + ---
-""".format(os.getenv("USERNAME"), os.getenv("USERPROFILE"), os.getenv("APPDATA"), os.getenv("USERDOMAIN"), os.getenv("COMPUTERNAME"), os.getenv("SYSTEMDRIVE"), os.getenv("NUMBER_OF_PROCESSORS"), os.getenv("PROCESSOR_ARCHITECTURE"), os.getenv("PROCESSOR_IDENTIFIER"), os.getenv("PROCESSOR_LEVEL"), str(os.cpu_count()), ip, lip, temp, ".".join(temp2), c.Style.RESET_ALL)
+""".format(os.getenv("USERNAME"), os.getenv("USERPROFILE"), os.getenv("APPDATA"), os.getenv("USERDOMAIN"), os.getenv("COMPUTERNAME"), os.getenv("SYSTEMDRIVE"), os.getenv("NUMBER_OF_PROCESSORS"), os.getenv("PROCESSOR_ARCHITECTURE"), os.getenv("PROCESSOR_IDENTIFIER"), os.getenv("PROCESSOR_LEVEL"), str(os.cpu_count()), ip, lip, temp, ".".join(temp2), c.Style.RESET_ALL, ENVI)
 
 print("--- Terminal + ---")
 
