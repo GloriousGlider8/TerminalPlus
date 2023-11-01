@@ -636,13 +636,30 @@ while True:
                     inst = input("[directory] Installation directory to open: ")
                 else:
                     temp = open(os.getenv("AppData") + "\\TerminalPlus\\" + inst + "\\PATH")
-                    print("inst = " + inst)
                     inst = temp.read()
-                    print("inst = " + inst)
-                    os.system("timeout /t -1")
                     temp.close()
                 
+                os.chdir(inst + "\\code")
                 runpy.run_path(inst + "\\code\\__main__.py")
+                os.chdir(homePath + "\\code")
+            elif args[1] == "del":
+                if selPrompt([c.Fore.YELLOW + "Yes" + c.Style.RESET_ALL, "No"], ["!", "<"], "Are you sure you want to delete an installation?") == 0:
+                    print(c.Fore.BLUE + "Hint: MAIN is the installation that starts up and is installed by deafult." + c.Style.RESET_ALL)
+                    inst = input("[string] Installation name to delete: ")
+                    temp = open(os.getenv("AppData") + "\\TerminalPlus\\" + inst + "\\PATH")
+                    instN = inst
+                    inst = temp.read()
+                    temp.close()
+                    
+                    if selPrompt([c.Fore.RED + "Yes" + c.Style.RESET_ALL, "No"], ["!", "<"], "Are you really sure you want to delete the installation: " + instN + "?") == 0:
+                        print("Enter the installation name to delete.\n" + c.Fore.BLUE + "Deleteing an installation means that ALL files in the installation folder are deleted!" + c.Style.RESET_ALL)
+                        print(c.Fore.CYAN + "Installation Name: " + instN + "\nInstallation Folder: " + inst + c.Style.RESET_ALL)
+                        if input("3: ") != instN:
+                            if input("2: ") != instN:
+                                if input("1: ") != instN:
+                                    raise Exception("User failed to enter installation name.")
+                        os.system("rmdir " + inst + " /S /Q")
+                        os.system("rmdir " + os.getenv("AppData") + "\\TerminalPlus\\" + instN + " /S /Q")
         else:
             found = False
             temp = open(homePath + "\\data\\addonsdef.json")
