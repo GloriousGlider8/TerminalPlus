@@ -659,8 +659,8 @@ while True:
                                 if input("1: ") != instN:
                                     raise Exception("User failed to enter installation name.")
                         print("inst:", str(os.path.exists(inst)), "inst reg:", str(os.path.exists(os.getenv("AppData") + "\\TerminalPlus\\" + instN)))
-                        os.system("rmdir " + inst + " /S /Q")
-                        os.system("rmdir " + os.getenv("AppData") + "\\TerminalPlus\\" + instN + " /S /Q")
+                        os.system("rmdir " + inst + " /S")
+                        os.system("rmdir " + os.getenv("AppData") + "\\TerminalPlus\\" + instN + " /S")
         else:
             found = False
             temp = open(homePath + "\\data\\addonsdef.json")
