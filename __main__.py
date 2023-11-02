@@ -493,11 +493,7 @@ while True:
                 temp3 = True
             bt = str(datetime.datetime.now()).split(" ")[1]
 
-            upAndClear()
-            upAndClear()
-            upAndClear()
-            upAndClear()
-
+            os.system("cls")
             prg.setTitle("Testing Connection: POST")
             prg.render()
 
