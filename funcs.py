@@ -215,14 +215,16 @@ class progressBar:
         self.title = title
     
     def render(self) -> None:
-        upAndClear()
-        upAndClear()
+        num = self.prg / self.max
+        decimal = num * 100
+        per = round(decimal, 2)
         print(self.title)
+        print("", end=" ")
         for _ in range(self.prg):
             print(c.Fore.LIGHTGREEN_EX + "█", end=c.Style.RESET_ALL)
         for _ in range(self.max - self.prg):
             print(c.Fore.GREEN + "█", end=c.Style.RESET_ALL)
-        print()
+        print(" " + str(per) + "%")
 
 #def selExplore(data: str):
 #    temp = []
