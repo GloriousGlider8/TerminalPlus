@@ -648,7 +648,6 @@ while True:
                     instN = inst
                     inst = temp.read()
                     temp.close()
-                    
                     if selPrompt([c.Fore.RED + "Yes" + c.Style.RESET_ALL, "No"], ["!", "<"], "Are you really sure you want to delete the installation: " + instN + "?") == 0:
                         print("Enter the installation name to delete.\n" + c.Fore.BLUE + "Deleteing an installation means that ALL files in the installation folder are deleted!" + c.Style.RESET_ALL)
                         print(c.Fore.CYAN + "Installation Name: " + instN + "\nInstallation Folder: " + inst + c.Style.RESET_ALL)
