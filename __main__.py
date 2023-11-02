@@ -9,6 +9,7 @@ import requests
 import keyboard as k
 import colorama as c
 import sys
+import funcs as f
 
 ENVI = d.env
 LINE_UP = '\033[1A'
@@ -315,14 +316,21 @@ while True:
                 
             if os.path.exists(reg):
                 if not silent:
-                    print("\nStarting Installation\n" + c.Fore.RED + "---------------------" + c.Style.RESET_ALL)
+                    prg = f.progressBar("Starting Registration", 21)
+                    prg.render()
+
+                    prg.increase(7)
+                    prg.setTitle("Writing Configuration")
 
                     time.sleep(0.5)
 
                     upAndClear()
                     upAndClear()
 
-                    print("Writing Configuration\n-------" + c.Fore.RED + "--------------" + c.Style.RESET_ALL)
+                    prg.render()
+
+                    prg.increase(7)
+                    prg.setTitle("Moving Source")
 
                     time.sleep(1.5)
 
@@ -341,7 +349,10 @@ while True:
                     upAndClear()
                     upAndClear()
 
-                    print("Moving Source\n--------------" + c.Fore.RED + "-------" + c.Style.RESET_ALL)
+                    prg.render()
+
+                    prg.increase(7)
+                    prg.setTitle("Registration Complete")
 
                     time.sleep(2.5)
 
@@ -350,7 +361,9 @@ while True:
                     upAndClear()
                     upAndClear()
 
-                    print("Registration Complete\n---------------------\n\nNew: " + temp2)
+                    prg.render()
+
+                    print("New: " + temp2)
 
                     time.sleep(3)
                 else:
