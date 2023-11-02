@@ -316,6 +316,8 @@ while True:
                 
             if os.path.exists(reg):
                 if not silent:
+                    print()
+
                     prg = f.progressBar("Starting Registration", 21)
                     prg.render()
 
@@ -434,7 +436,12 @@ while True:
 
             os.system("cls")
 
-            print("Testing Connection\n-" + c.Fore.RED + "--------------------" + c.Style.RESET_ALL)
+            prg = f.progressBar("Testing Connection", 21)
+            prg.increase(1)
+            prg.render()
+
+            prg.increase(10)
+            prg.setTitle("Testing Connection: GET")
             
             bt = str(datetime.datetime.now()).split(" ")[1]
 
@@ -472,15 +479,15 @@ while True:
 
                 os.system("cls")
 
-                print("Testing Connection\n-----------" + c.Fore.RED + "----------" + c.Style.RESET_ALL)
+                prg.render()
+
                 print("Download\n" + get + "\n" + str(delta) + "\n" + c.Fore.GREEN + "Completed" + c.Style.RESET_ALL)
 
                 temp3 = False
             else:
 
                 os.system("cls")
-
-                print("Testing Connection\n-" + c.Fore.RED + "!!!!" + getres + "!!!----------" + c.Style.RESET_ALL)
+                prg.render()
                 print("Download\n" + get + "\n#:##:##\n" + c.Fore.RED + "Failed" + c.Style.RESET_ALL)
 
                 temp3 = True
@@ -490,6 +497,12 @@ while True:
             upAndClear()
             upAndClear()
             upAndClear()
+
+            prg.setTitle("Testing Connection: POST")
+            prg.render()
+
+            prg.increase(10)
+            prg.setTitle("Completed")
 
             print("Upload\n" + post + "\n#:##:##\n" + c.Fore.YELLOW + "In Progress" + c.Style.RESET_ALL)
             
@@ -524,18 +537,12 @@ while True:
             if temp1:
                 os.system("cls")
 
-                if temp3:
-                    print("Testing Connection\n-" + c.Fore.RED + "!!!!" + getres + "!!!" + c.Style.RESET_ALL + "----------")
-                else:
-                    print("Testing Connection\n---------------------")
+                prg.render()
                 print("Upload\n" + post + "\n" + str(delta) + "\n" + c.Fore.GREEN + "Completed" + c.Style.RESET_ALL)
             else:
                 os.system("cls")
 
-                if temp3:
-                    print("Testing Connection\n-" + c.Fore.RED + "!!!!" + getres + "!!!!!!!" + postres + "!!!" + c.Style.RESET_ALL)
-                else:
-                    print("Testing Connection\n-----------" + c.Fore.RED + "!!!!" + postres + "!!!" + c.Style.RESET_ALL)
+                prg.render()
                 print("Upload\n" + post + "\n#:##:##\n" + c.Fore.RED + "Failed" + c.Style.RESET_ALL)
 
             os.system("cls")
