@@ -34,12 +34,10 @@ args = json.load(argsTxt)
 argsTxt.close()
 argsTxt = None
 
-temp = \"\"\"
-argsTxt = open(\"data\\\\args.json\", \"r\")
+temp = \"\"\"argsTxt = open(\"data\\\\args.json\", \"r\")
 args = json.load(argsTxt)
 argsTxt.close()
-argsTxt = None
-\"\"\"
+argsTxt = None\"\"\"
 
 print(c.Fore.GREEN + \"Terminal + addons are working.\" + c.Style.RESET_ALL + \"\nArgument Format:\")
 for i in range(len(args)):
