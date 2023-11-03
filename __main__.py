@@ -691,7 +691,9 @@ while True:
 
                 for v in temp:
                     print(v)
-                    if v.removeprefix(os.getenv("AppData") + "TerminalPlus\\").find("\\") == -1 and os.path.is_dir(v) and v.removeprefix(os.getenv("AppData") + "TerminalPlus") != "SYS-CMD" and v.removeprefix(os.getenv("AppData") + "TerminalPlus") != "SYS-RES":
+                    print(str(os.path.is_dir(v)))
+                    print(str(v.removeprefix(os.getenv("AppData") + "TerminalPlus\\").find("\\")))
+                    if v.removeprefix(os.getenv("AppData") + "TerminalPlus\\").find("\\") == -1 and os.path.is_dir(v) and v.removeprefix(os.getenv("AppData") + "TerminalPlus\\") != "SYS-CMD" and v.removeprefix(os.getenv("AppData\\") + "TerminalPlus") != "SYS-RES":
                         temp1 = open(v + "\\PATH")
                         temp2 = temp1.read()
                         temp1.close()
