@@ -693,6 +693,7 @@ while True:
                     print(v)
                     print(str(os.path.isdir(v)))
                     print(str(v.removeprefix(os.getenv("AppData") + "TerminalPlus\\").find("\\")))
+                    print(v.removeprefix(os.getenv("AppData") + "TerminalPlus\\"))
                     if v.removeprefix(os.getenv("AppData") + "TerminalPlus\\").find("\\") == -1 and os.path.isdir(v) and v.removeprefix(os.getenv("AppData") + "TerminalPlus\\") != "SYS-CMD" and v.removeprefix(os.getenv("AppData\\") + "TerminalPlus") != "SYS-RES":
                         temp1 = open(v + "\\PATH")
                         temp2 = temp1.read()
