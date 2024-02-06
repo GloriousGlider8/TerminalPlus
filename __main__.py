@@ -8,62 +8,34 @@ import time
 import requests
 import keyboard as k
 import colorama as c
-import sys
-import funcs as f
+import gg8lib as f
 import glob as g
+import sys
+
+noExec = False
+toExec = ""
+cliExec = False
+
+if len(sys.argv) > 1:
+    if sys.argv[1] == "/c" or sys.argv[1] == "-C":
+        toExec = " ".join(sys.argv[2:]) + " && exit"
+        noExec = True
+        cliExec = True
+    elif sys.argv[1] == "/?" or sys.argv[1] == "--help":
+        cliExec = True
+        noExec = True
+        toExec = "exit"
+
+pcname = os.getenv("COMPUTERNAME")
+domain = os.getenv("USERDOMAIN")
+uname = os.getenv("USERNAME")
 
 ENVI = d.env
-LINE_UP = '\033[1A'
-LINE_CLEAR = '\x1b[2K'
 VER = d.ver
 
 ip = socket.gethostbyname(socket.gethostname())
 found = None
 homePath = None
-noExec = False
-toExec = ""
-
-def upAndClear():
-    print(LINE_UP, end=LINE_CLEAR)
-
-def selPrompt(options, icons, intro):
-    os.system("cls")
-    print(intro)
-    print("\nUse [UP] and [DOWN] to move cursor.\nUse [RIGHT] to select.\n")
-
-    print("[" + icons[0] + "] " + options[0])
-
-    for i in range(len(options) - 1):
-        print("[ ] " + options[i + 1])
-
-    temp = 0
-    temp1 = 0
-
-    while True:
-        time.sleep(0.15)
-
-        if temp1 != temp:
-            for _ in range(len(options)):
-                upAndClear()
-            for i in range(len(options)):
-                if temp == i:
-                    print("[" + icons[i] + "] " + options[i])
-                else:
-                    print("[ ] " + options[i])
-                
-            temp1 = temp
-
-        if k.is_pressed("up"):
-            if temp > 0:
-                temp = temp - 1
-                                    
-        elif k.is_pressed("down"):
-            if temp < len(options) - 1:
-                temp = temp + 1
-
-        elif k.is_pressed("right"):
-            os.system("cls")
-            return temp
 
 if os.path.exists(os.path.join(os.getenv("APPDATA"), "TerminalPlus", ENVI, "PATH")):
     homePathTxt = open(os.path.join(os.getenv("APPDATA"), "TerminalPlus", ENVI, "PATH"))
@@ -71,9 +43,12 @@ if os.path.exists(os.path.join(os.getenv("APPDATA"), "TerminalPlus", ENVI, "PATH
     homePathTxt.close()
     homePathTxt = None
     if not os.path.exists(homePath):
+        print(homePath)
         raise OSError("TerminalPlus HOME is not valid")
 else:
     raise OSError("TerminalPlus HOME is missing")
+
+os.chdir(homePath)
 
 with open(homePath + "\\data\\li", "r") as file:
     lip = str(file.read())
@@ -83,7 +58,7 @@ with open(homePath + "\\data\\li", "r") as file:
     if lip != str(ip):
         os.remove(homePath + "\\data\\li")
         
-        print("\nIP changed from " + lip + " to " + ip + "\n")
+        print("\nPrivate IP changed from " + lip + " to " + ip + "\n")
 
         with open(homePath + "\\data\\li", "w") as file1:
             file1.write(str(ip))
@@ -91,19 +66,20 @@ with open(homePath + "\\data\\li", "r") as file:
         time.sleep(1.5)
 
 os.system("@echo off")
-os.system("cls")
+if not cliExec:
+    os.system("cls")
 
 def cmdExists(cmd):
     return os.system("cmd /c \"(help {0} > nul || exit 0) && where {0} > nul 2> nul\"".format(cmd)) == 0
 
 if not cmdExists("python"):
-    if selPrompt(["Yes", "No"], [">", ">"], "You do not have python installed correctly on your computer.\nUsing addons and other features requires python.\nWould you like to install it?") == 0:
+    if f.selPrompt(["Yes", "No"], [">", ">"], "You do not have python installed correctly on your computer.\nUsing addons and other features requires python.\nWould you like to install it?") == 0:
         os.system("python")
 
 def log(content, typ):
     logs = open(homePath + "\\data\\termP.log", "a")
 
-    logs.write("\n{0} [{1}] [{2}] [{3}] {4}".format(os.getenv("COMPUTERNAME") + "\\" + os.getenv("USERDOMAIN") + "\\" + os.getenv("USERNAME"), str(ip), typ, str(datetime.datetime.now()).split(" ")[1].split(".")[0], content))
+    logs.write("\n{0} [{1}] [{2}] [{3}] {4}".format(pcname + "\\" + domain + "\\" + uname, str(ip), typ, str(datetime.datetime.now()).split(" ")[1].split(".")[0], content))
 
     logs.close()
 
@@ -112,24 +88,22 @@ def clearLog():
 
     logs = open(homePath + "\\data\\termP.log", "x")
 
-    logs.write("{0} [{1}] [{2}] [{3}] {4}".format(os.getenv("COMPUTERNAME") + "\\" + os.getenv("USERDOMAIN") + "\\" + os.getenv("USERNAME"), str(ip), "INFO", str(datetime.datetime.now()).split(" ")[1].split(".")[0], "Logs Cleared"))
+    logs.write("{0} [{1}] [{2}] [{3}] {4}".format(pcname + "\\" + domain + "\\" + uname, str(ip), "INFO", str(datetime.datetime.now()).split(" ")[1].split(".")[0], "Logs Cleared"))
 
     logs.close()
 
 def ftlKBI():
     logs = open(homePath + "\\data\\termP.log", "a")
 
-    logs.write("\n{0} [{1}] [{2}] [{3}] {4}".format(os.getenv("COMPUTERNAME") + "\\" + os.getenv("USERDOMAIN") + "\\" + os.getenv("USERNAME"), str(ip), "FATAL", str(datetime.datetime.now()).split(" ")[1].split(".")[0], "Keyboard Crash (CTRL+C)"))
+    logs.write("\n{0} [{1}] [{2}] [{3}] {4}".format(pcname + "\\" + domain + "\\" + uname, str(ip), "FATAL", str(datetime.datetime.now()).split(" ")[1].split(".")[0], "Keyboard Crash (CTRL+C)"))
 
     logs.close()
-
-os.system("cls")
 
 log("User loaded program", "STARTUP")
 
 temp = c.Fore.YELLOW
 
-temp1 = [3, 10, 11]
+temp1 = [3, 12, 1]
 
 temp2 = sys.version.split(" ")[0].split(".")
 
@@ -154,11 +128,11 @@ about = """
 
 --- About Terminal + ---
 
-Version: NT_10+11_{18}_py3.10.11_usr
+Version: NT_10+11_{18}_py3.12.1_usr
     System: NT
     System Version: Windows 10 / 11
     Terminal + Software Version: {18}
-    Intended Python Interpreter Version: {13}3.10.11{15}
+    Intended Python Interpreter Version: {13}3.12.1{15}
     Current Python Interpreter Version: {13}{14}{15}
     Terminal + Installation Type: User Account
 Terminal + HOME: {16}
@@ -193,7 +167,8 @@ NOTE: None of this is ever sent without your consent!
 --- Terminal + ---
 """.format(os.getenv("USERNAME"), os.getenv("USERPROFILE"), os.getenv("APPDATA"), os.getenv("USERDOMAIN"), os.getenv("COMPUTERNAME"), os.getenv("SYSTEMDRIVE"), os.getenv("NUMBER_OF_PROCESSORS"), os.getenv("PROCESSOR_ARCHITECTURE"), os.getenv("PROCESSOR_IDENTIFIER"), os.getenv("PROCESSOR_LEVEL"), str(os.cpu_count()), ip, lip, temp, ".".join(temp2), c.Style.RESET_ALL, homePath, ENVI, VER)
 
-print("--- Terminal + ---")
+if not cliExec:
+    print("--- Terminal + ---")
 
 k.add_hotkey("ctrl+c", ftlKBI)
 
@@ -205,7 +180,7 @@ while True:
 
             log(cmd, "AUTO_EXEC")
         else:
-            cmd = input("\n" + os.getenv("COMPUTERNAME") + "\\" + os.getenv("USERDOMAIN") + "\\" + os.getenv("USERNAME") + " >> ")
+            cmd = input("\n" + pcname + "\\" + domain + "\\" + uname + " >> ")
 
             log(cmd, "MANUAL_EXEC")
 
@@ -224,7 +199,7 @@ while True:
         if cmd.find("&nln;") != -1:
             cmd = "\n".join(cmd.split("&nln;"))
         if cmd.find("?ip;") != -1:
-            if selPrompt(["No", c.Fore.YELLOW + "Yes" + c.Style.RESET_ALL], [">", "!"], "A source wants access to this device's IP address.\nAllow Access?\nWith an IP, a wifi network can easily be tracked!") == 0:
+            if f.selPrompt(["No", c.Fore.YELLOW + "Yes" + c.Style.RESET_ALL], [">", "!"], "A source wants access to this device's private IP address.\nAllow Access?\nThis is a private IP and NOT a public one!") == 0:
                 cmd = "0".join(cmd.split("?ip;"))
             else:
                 cmd = str(ip).join(cmd.split("?ip;"))
@@ -236,7 +211,7 @@ while True:
         if args[0] == "exit":
             break
         elif args[0] == "pytest":
-            if selPrompt(["Yes", "No"], [">", ">"], "You may not have python installed correctly on your computer.\nUsing addons and other features requires python.\nWould you like to install it?") == 0:
+            if f.selPrompt(["Yes", "No"], [">", ">"], "You may not have python installed correctly on your computer.\nUsing addons and other features requires python.\nWould you like to install it?") == 0:
                 if not cmdExists("pip"):
                     os.system("python")
                 else:
@@ -279,7 +254,7 @@ while True:
             if cmdExists("pip"):
                 os.system("python")
             else:
-                if selPrompt(["Yes", "No"], [">", ">"], "You do not have python installed correctly on your computer.\nUsing addons and other features requires python.\nWould you like to install it?") == 0:
+                if f.selPrompt(["Yes", "No"], [">", ">"], "You do not have python installed correctly on your computer.\nUsing addons and other features requires python.\nWould you like to install it?") == 0:
                     os.system("python")
 
             print("\n--- Terminal + ---\n")
@@ -294,7 +269,7 @@ while True:
                     else:
                         break
             else:
-                if selPrompt(["Yes", "No"], [">", ">"], "You do not have python installed correctly on your computer.\nUsing addons and other features requires python.\nWould you like to install it?") == 0:
+                if f.selPrompt(["Yes", "No"], [">", ">"], "You do not have python installed correctly on your computer.\nUsing addons and other features requires python.\nWould you like to install it?") == 0:
                     os.system("python")
             
             print("--- Terminal + ---\n")
@@ -319,7 +294,7 @@ while True:
                 if not silent:
                     print()
 
-                    prg = f.progressBar("Starting Registration", 21)
+                    prg = f.progressBar("Starting Registration", 21, c.Fore.GREEN, c.Fore.LIGHTGREEN_EX, c.Fore.CYAN)
                     prg.render()
 
                     prg.increase(7)
@@ -327,8 +302,8 @@ while True:
 
                     time.sleep(0.5)
 
-                    upAndClear()
-                    upAndClear()
+                    f.upAndClear()
+                    f.upAndClear()
 
                     prg.render()
 
@@ -340,17 +315,15 @@ while True:
                     with open(homePath + "\\data\\addonsdef.json", "r") as temp1:
                         temp = json.load(temp1)
 
-                    os.remove(homePath + "\\data\\addonsdef.json")
-
                     temp2 = input("[string] Command Name: ")
-                    upAndClear()
+                    f.upAndClear()
 
                     with open(homePath + "\\data\\addonsdef.json", "w") as temp1:
                         temp.append(temp2)
                         temp1.write(json.dumps(temp))
 
-                    upAndClear()
-                    upAndClear()
+                    f.upAndClear()
+                    f.upAndClear()
 
                     prg.render()
 
@@ -359,12 +332,15 @@ while True:
 
                     time.sleep(2.5)
 
-                    os.rename(reg, homePath + "\\data\\" + temp2 + ".py")
+                    if os.system("copy " + reg + " " + homePath + "\\addons\\" + temp2 + ".py") != 0:
+                        raise Exception("Failed to install!")
 
-                    upAndClear()
-                    upAndClear()
+                    #f.upAndClear()
+                    #f.upAndClear()
 
                     prg.render()
+                    prg.keyMode(False)
+                    os.system("cls")
 
                     print("New: " + temp2)
 
@@ -378,7 +354,7 @@ while True:
                     os.remove(homePath + "\\data\\addonsdef.json")
 
                     temp2 = input("[string] Command Name: ")
-                    upAndClear()
+                    f.upAndClear()
 
                     with open(homePath + "\\data\\addonsdef.json", "w") as temp1:
                         temp.append(temp2)
@@ -386,7 +362,8 @@ while True:
 
                     time.sleep(2.5)
 
-                    os.rename(reg, homePath + "\\data\\" + temp2 + ".py")
+                    if os.system("copy " + reg + " " + homePath + "\\addons\\" + temp2 + ".py") != 0:
+                        raise Exception("Failed to install!")
 
                     time.sleep(3)
             else:
@@ -418,12 +395,19 @@ while True:
         elif args[0] == "wait":
             time.sleep(float(args[1]))
         elif args[0] == "clearln":
-            upAndClear()
+            f.upAndClear()
         elif args[0] == "http":
             if args[1] == "get":
                 print(str(requests.get(args[2], json.loads(" ".join(args[3:len(args)]))).content))
             elif args[1] == "post":
                 print(str(requests.post(args[2], json.loads(" ".join(args[3:len(args)]))).content))
+        elif args[0] == "pkg":
+            if args[1] == "install":
+                print(f"Using {c.Fore.GREEN}GitHub{c.Style.RESET_ALL} for package search...")
+                if len(args) <= 2:
+                    input("[string] GitHub Repo (author/repo/branch): ")
+                
+                print(f"")
         elif args[0] == "ctest":
             get = "http://httpbin.org/get"
             post = "http://httpbin.org/post"
@@ -437,7 +421,7 @@ while True:
 
             os.system("cls")
 
-            prg = f.progressBar("Testing Connection", 21)
+            prg = f.progressBar("Testing Connection", 21, c.Fore.GREEN, c.Fore.LIGHTGREEN_EX, c.Fore.CYAN)
             prg.increase(1)
             prg.render()
 
@@ -531,6 +515,8 @@ while True:
 
             upl = delta
 
+            os.system("cls")
+
             if temp1:
                 os.system("cls")
 
@@ -588,26 +574,27 @@ while True:
             if post != "http://httpbin.org/post":
                 print("Custom POST URL: " + post)
             print("TOTAL: " + str(dwn + upl))
+            prg.keyMode(False)
         elif args[0] == "rmv":
             if args[1] == "reg":
                 print("\n--- Registration Removal ---\n")
-                prg = f.progressBar("Reading Command Data", 21)
+                prg = f.progressBar("Reading Command Data", 21, c.Fore.GREEN, c.Fore.LIGHTGREEN_EX, c.Fore.CYAN)
                 prg.increase(1)
                 prg.render()
                 prg.increase(6)
                 prg.setTitle("Reading addon dictionary")
                 rmv = input("[string] Command to remove: ")
-                upAndClear()
-                upAndClear()
-                upAndClear()
+                f.upAndClear()
+                f.upAndClear()
+                f.upAndClear()
                 prg.render()
                 prg.increase(7)
                 prg.setTitle("Editing addon dictionary")
                 temp = open(homePath + "\\data\\addonsdef.json")
                 temp1 = json.load(temp)
                 temp.close()
-                upAndClear()
-                upAndClear()
+                f.upAndClear()
+                f.upAndClear()
                 prg.render()
                 prg.increase(6)
                 prg.setTitle("Removing script file")
@@ -619,18 +606,20 @@ while True:
                         temp2.append(v)
                 temp.write(json.dumps(temp2))
                 temp.close()
-                upAndClear()
-                upAndClear()
+                f.upAndClear()
+                f.upAndClear()
                 prg.render()
                 prg.increase(1)
                 prg.setTitle("Removed registration for " + rmv)
-                if os.path.exists(homePath + "\\data\\" + rmv + ".py"):
-                    os.remove(homePath + "\\data\\" + rmv + ".py")
+                if os.path.exists(homePath + "\\addons\\" + rmv + ".py"):
+                    os.remove(homePath + "\\addons\\" + rmv + ".py")
                 else:
                     raise IOError("Failed to delete addon script")
-                upAndClear()
-                upAndClear()
+                f.upAndClear()
+                f.upAndClear()
                 prg.render()
+                prg.keyMode(False)
+                os.system("cls")
                 print("\n--- Terminal + ---\n")
         elif args[0] == "clear":
             os.system("cls")
@@ -645,6 +634,7 @@ while True:
                 temp1 = str(c.Fore.GREEN + "STARTUP" + c.Style.RESET_ALL).join(temp1.split("STARTUP"))
                 print("\n--- Logs ---\n")
                 print(temp1)
+                print("Log Size: " + str(round(os.stat(homePath + "\\data\\termP.log").st_size / (1024 * 1024), 2)) + " MiB")
                 print("\n--- Terminal + ---\n")
             elif args[1] == "write":
                 log("[" + args[2] + "] " + str(" ").join(args[3:len(args) - 1]), args[len(args) - 1])
@@ -654,7 +644,7 @@ while True:
         elif args[0] == "inst":
             if args[1] == "new":
                 print("\n--- Installation Setup ---\n")
-                if selPrompt(["Yes", "No"], [">", "<"], "Are you sure you would like to setup a new installation?") == 0:
+                if f.selPrompt(["Yes", "No"], [">", "<"], "Are you sure you would like to setup a new installation?") == 0:
                     runpy.run_path(homePath + "\\code\\newEnv.py")
                 print("\n--- Terminal + ---\n")
             elif args[1] == "open":
@@ -668,14 +658,14 @@ while True:
                 
                 os.system("tplus /I \"" + inst + "\"")
             elif args[1] == "del":
-                if selPrompt([c.Fore.YELLOW + "Yes" + c.Style.RESET_ALL, "No"], ["!", "<"], "Are you sure you want to delete an installation?") == 0:
+                if f.selPrompt([c.Fore.YELLOW + "Yes" + c.Style.RESET_ALL, "No"], ["!", "<"], "Are you sure you want to delete an installation?") == 0:
                     print(c.Fore.BLUE + "Hint: MAIN is the installation that starts up and is installed by deafult." + c.Style.RESET_ALL)
                     inst = input("[string] Installation name to delete: ")
                     temp = open(os.getenv("AppData") + "\\TerminalPlus\\" + inst + "\\PATH")
                     instN = inst
                     inst = temp.read()
                     temp.close()
-                    if selPrompt([c.Fore.RED + "Yes" + c.Style.RESET_ALL, "No"], ["!", "<"], "Are you really sure you want to delete the installation: " + instN + "?") == 0:
+                    if f.selPrompt([c.Fore.RED + "Yes" + c.Style.RESET_ALL, "No"], ["!", "<"], "Are you really sure you want to delete the installation: " + instN + "?") == 0:
                         print("Enter the installation name to delete.\n" + c.Fore.BLUE + "Deleteing an installation means that ALL files in the installation folder are deleted!" + c.Style.RESET_ALL)
                         print(c.Fore.CYAN + "Installation Name: " + instN + "\nInstallation Folder: " + inst + c.Style.RESET_ALL)
                         if input("3: ") != instN:
@@ -709,13 +699,11 @@ while True:
                     break
             
             if found:
-                os.remove(homePath + "\\data\\args.json")
-                
                 temp = open(homePath + "\\data\\args.json", "w")
                 temp.write(json.dumps(args))
                 temp.close()
 
-                runpy.run_path(homePath + "\\data\\" + args[0] + ".py")
+                runpy.run_path(homePath + "\\addons\\" + args[0] + ".py")
             else:
                 print("Unknown command: " + args[0] + "\nIf this is an addon command, you can install it with the command reg\nIf you have already installed it, use rmv reg " + args[0] + " and then reg again.")
 
@@ -728,4 +716,5 @@ while True:
 #    finally:
 #        print("")
 
-os.system("cls")
+if not cliExec:
+    os.system("cls")

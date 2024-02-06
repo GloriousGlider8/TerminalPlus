@@ -23,7 +23,8 @@ else:
 print()
 
 os.mkdir(clone + "\\data")
-temp = open(clone + "\\data\\addonsdef.json", "x")
+os.mkdir(clone + "\\addons")
+temp = open(clone + "\\addons\\addonsdef.json", "x")
 temp.write("[\"addon-test\"]")
 temp.close()
 temp = open(clone + "\\data\\addon-test.py", "x")
