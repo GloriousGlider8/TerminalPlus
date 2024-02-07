@@ -28,7 +28,7 @@ args = json.load(argsTxt)
 argsTxt.close()
 argsTxt = None\"\"\"
 
-print(c.Fore.GREEN + \"Terminal + addons are working.\" + c.Style.RESET_ALL + \"\nArgument Format:\")
+print(c.Fore.GREEN + \"Terminal + addons are working.\" + c.Style.RESET_ALL + \"\\nArgument Format:\")
 for i in range(len(args)):
     print(\"[\" + str(i) + \"]: \" + args[i])
 print(c.Fore.BLUE + \"\nGet argument list with:\n\" + c.Fore.LIGHTCYAN_EX + temp)
