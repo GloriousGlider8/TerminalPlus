@@ -652,11 +652,14 @@ while True:
                 if inst == "":
                     inst = input("[directory] Installation directory to open: ")
                 else:
-                    temp = open(os.getenv("AppData") + "\\TerminalPlus\\" + inst + "\\PATH")
-                    inst = temp.read()
-                    temp.close()
+                    if os.path.exists(os.getenv("AppData") + "\\TerminalPlus\\" + inst + "\\PATH"):
+                        temp = open(os.getenv("AppData") + "\\TerminalPlus\\" + inst + "\\PATH")
+                        inst = temp.read()
+                        temp.close()
+                    else:
+                        print(f"{c.Fore.RED} Invalid Installation")
                 
-                os.system("tplus /I \"" + inst + "\"")
+                os.system(f"python \"{inst}\"\\code")
             elif args[1] == "del":
                 if f.selPrompt([c.Fore.YELLOW + "Yes" + c.Style.RESET_ALL, "No"], ["!", "<"], "Are you sure you want to delete an installation?") == 0:
                     print(c.Fore.BLUE + "Hint: MAIN is the installation that starts up and is installed by deafult." + c.Style.RESET_ALL)
@@ -674,8 +677,8 @@ while True:
                                     raise Exception("User failed to enter installation name.")
                         os.system("rmdir \"" + inst + "\" /S /Q")
                         os.system("rmdir " + os.getenv("AppData") + "\"\\TerminalPlus\\" + instN + "\" /S /Q")
-                        print("Removed Installation")
                         os.system("cls")
+                        print(f"Removed Installation {instN}")
             elif args[1] == "list":
                 temp = g.glob(os.getenv("AppData") + "\\TerminalPlus\\*")
 
@@ -684,7 +687,10 @@ while True:
                         temp1 = open(v + "\\PATH")
                         temp2 = temp1.read()
                         temp1.close()
-                        print("[ENV] " + v.removeprefix(os.getenv("AppData") + "\\TerminalPlus\\") + " " + temp2)
+                        if temp2 == "MAIN":
+                            print(f"{c.Fore.BLUE}PROTECTED{c.Style.RESET_ALL} [ENV] " + v.removeprefix(os.getenv("AppData") + "\\TerminalPlus\\") + " " + temp2)
+                        else:
+                            print("[ENV] " + v.removeprefix(os.getenv("AppData") + "\\TerminalPlus\\") + " " + temp2)
         else:
             found = False
             temp = open(homePath + "\\data\\addonsdef.json")
