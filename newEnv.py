@@ -12,10 +12,10 @@ print()
 
 os.mkdir(clone + "\\data")
 os.mkdir(clone + "\\addons")
-temp = open(clone + "\\addons\\addonsdef.json", "x")
+temp = open(clone + "\\data\\addonsdef.json", "x")
 temp.write("[\"addon-test\"]")
 temp.close()
-temp = open(clone + "\\data\\addon-test.py", "x")
+temp = open(clone + "\\addons\\addon-test.py", "x")
 temp.write("""import json
 import colorama as c
 argsTxt = open("args.json", "r")
