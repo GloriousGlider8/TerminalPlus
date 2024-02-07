@@ -687,7 +687,7 @@ while True:
                         temp1 = open(v + "\\PATH")
                         temp2 = temp1.read()
                         temp1.close()
-                        if v == f"{os.getenv("APPDATA")}\\MAIN":
+                        if v == f"{os.getenv("APPDATA")}\\TerminalPlus\\MAIN":
                             print(f"{c.Fore.BLUE}PROTECTED{c.Style.RESET_ALL} [ENV] " + v.removeprefix(os.getenv("AppData") + "\\TerminalPlus\\") + " " + temp2)
                         else:
                             print("[ENV] " + v.removeprefix(os.getenv("AppData") + "\\TerminalPlus\\") + " " + temp2)
