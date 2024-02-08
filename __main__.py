@@ -645,6 +645,9 @@ while True:
                         print(f"{c.Fore.RED}Failed to push changes!{c.Style.RESET_ALL}")
                     os.rename(f"{homePath}\\code\\addon-test.py", f"{homePath}\\addons\\addon-test.py")
                     os.chdir(homePath)
+                elif args[1] == "pull":
+                    os.chdir(f"{homePath}\\code")
+                    if os.system("git pull origin")
             else:
                 print(f"{c.Fore.RED}This installation is not a development one!{c.Style.RESET_ALL}")
         elif args[0] == "log":
