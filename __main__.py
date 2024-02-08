@@ -653,7 +653,7 @@ while True:
                         print(f"{c.Fore.RED}Failed to pull changes!{c.Style.RESET_ALL}")
                     os.chdir(homePath)
                 elif args[1] == "exit":
-                    if os.system(f"{homePath}\\code\\.git /S /Q") == 0:
+                    if os.system(f"rmdir {homePath}\\code\\.git /S /Q") == 0:
                         os.remove(f"{os.getenv("APPDATA")}\\TerminalPlus\\{ENVI}\\DEV")
                         print(f"{c.Fore.GREEN}Successfully exited dev mode!{c.Style.RESET_ALL}")
                     else:
