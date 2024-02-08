@@ -651,6 +651,7 @@ while True:
                         print(f"{c.Fore.GREEN}Successfully pulled main branch!{c.Style.RESET_ALL}")
                     else:
                         print(f"{c.Fore.RED}Failed to pull changes!{c.Style.RESET_ALL}")
+                    os.chdir(homePath)
             else:
                 print(f"{c.Fore.RED}This installation is not a development one!{c.Style.RESET_ALL}")
         elif args[0] == "log":
