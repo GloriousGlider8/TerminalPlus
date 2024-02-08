@@ -1,6 +1,6 @@
 import json
 import colorama as c
-argsTxt = open("args.json", "r")
+argsTxt = open("data\\args.json", "r")
 args = json.load(argsTxt)
 argsTxt.close()
 argsTxt = None
