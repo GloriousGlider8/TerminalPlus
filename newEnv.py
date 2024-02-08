@@ -27,7 +27,8 @@ os.mkdir(os.getenv("AppData") + "\\TerminalPlus\\" + name)
 temp = open(os.getenv("AppData") + "\\TerminalPlus\\" + name + "\\PATH", "x")
 temp.write(clone)
 temp.close()
-os.system("git clone https://github.com/GloriousGlider8/TerminalPlus \"" + clone + "\\code\"")
+if os.system("git clone https://github.com/GloriousGlider8/TerminalPlus \"" + clone + "\\code\"") != 0:
+    raise Exception(f"{c.Fore.RED}Failed to gather all components!{c.Fore.LIGHTRED_EX}\nAre you connected to the internet?{c.Style.RESET_ALL}")
 if gg8lib.selPrompt(["Standard", "Development"], [">", "!"], "What type?\nDEV will not delete the git repository or remove the origin upon removal!") == 0:
     os.system("rmdir \"" + clone + "\\code\\.git\" /S /Q")
     os.remove(clone + "\\code\\.gitignore")
