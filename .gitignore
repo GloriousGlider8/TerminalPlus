@@ -10,6 +10,7 @@ __pycache__/
 data/
 res/
 bin/
+ignore
 
 # C extensions
 *.so
