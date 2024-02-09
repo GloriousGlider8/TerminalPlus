@@ -671,7 +671,7 @@ while True:
                 temp1 = str(c.Fore.GREEN + "STARTUP" + c.Style.RESET_ALL).join(temp1.split("STARTUP"))
                 print("\n--- Logs ---\n")
                 print(temp1)
-                print("Log Size: " + str(round(os.stat(homePath + "\\data\\termP.log").st_size / (1024 * 1024), 2)) + " MiB")
+                print(f"Log Size: {c.Fore.YELLOW}" + str(round(os.stat(homePath + "\\data\\termP.log").st_size / (1024 * 1024), 2)) + f" MiB{c.Style.RESET_ALL}")
                 print("\n--- Terminal + ---\n")
             elif args[1] == "write":
                 log("[" + args[2] + "] " + str(" ").join(args[3:len(args) - 1]), args[len(args) - 1])
