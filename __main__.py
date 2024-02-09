@@ -333,7 +333,7 @@ while True:
                     time.sleep(2.5)
 
                     if os.system("copy " + reg + " " + homePath + "\\addons\\" + temp2 + ".py") != 0:
-                        raise Exception("Failed to install!")
+                        raise Exception(f"{c.Fore.RED}Failed to install!{c.Style.RESET_ALL}")
 
                     #f.upAndClear()
                     #f.upAndClear()
@@ -363,7 +363,7 @@ while True:
                     time.sleep(2.5)
 
                     if os.system("copy " + reg + " " + homePath + "\\addons\\" + temp2 + ".py") != 0:
-                        raise Exception("Failed to install!")
+                        raise Exception(f"{c.Fore.RED}Failed to install!{c.Style.RESET_ALL}")
 
                     time.sleep(3)
             else:
@@ -614,7 +614,7 @@ while True:
                 if os.path.exists(homePath + "\\addons\\" + rmv + ".py"):
                     os.remove(homePath + "\\addons\\" + rmv + ".py")
                 else:
-                    raise IOError("Failed to delete addon script")
+                    raise Exception(f"{c.Fore.RED}Failed to delete addon script!{c.Style.RESET_ALL}")
                 f.upAndClear()
                 f.upAndClear()
                 prg.render()
@@ -711,7 +711,7 @@ while True:
                         if input("3: ") != instN:
                             if input("2: ") != instN:
                                 if input("1: ") != instN:
-                                    raise Exception("User failed to enter installation name.")
+                                    raise Exception(f"{c.Fore.RED}User failed to enter installation name.{c.Style.RESET_ALL}")
                         os.system("rmdir \"" + inst + "\" /S /Q")
                         os.system("rmdir " + os.getenv("AppData") + "\"\\TerminalPlus\\" + instN + "\" /S /Q")
                         os.system("cls")
