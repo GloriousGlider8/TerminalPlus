@@ -385,7 +385,7 @@ while True:
         elif args[0] == "writeln":
             print(" ".join(args[1:len(args)]))
         elif args[0] == "error":
-            print("ERR\nTYP: {0}\nARG: {1}".format(args[1], args[2,100]))
+            print("ERR\nTYP: {0}\nARG: {1}".format(args[1], tuple(args[2:100])))
         elif args[0] == "crash":
             log("User Requested Crash", "FATAL")
             raise KeyboardInterrupt()
