@@ -639,6 +639,7 @@ while True:
                                 while mat != None:
                                     matStr = f.extractSub(str(mat), "match='", "'")
                                     v = v.removeprefix(matStr)
+                                    print(f"{v} {matStr}")
                                     mat = re.match(r" [1-9]+ (file changed|deletion|insertion|files changed)", v)
                         if input("[true / false] force changes: ") == "true":
                             if os.system("git push origin main --force > ignore") == 0:
