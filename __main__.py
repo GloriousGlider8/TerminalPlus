@@ -637,7 +637,7 @@ while True:
                                 print(v)
                                 mat = re.match(r"( |,)*[1-9]+ (file changed|deletion|insertion|files changed)", v)
                                 while mat != None:
-                                    matStr = f.extract(str(mat), "match='", "'")
+                                    matStr = f.extractSub(str(mat), "match='", "'")
                                     v = v.removeprefix(matStr)
                                     print(matStr)
                                     mat = re.match(r" [1-9]+ (file changed|deletion|insertion|files changed)", v)
