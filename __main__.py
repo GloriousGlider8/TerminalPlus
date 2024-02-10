@@ -634,7 +634,7 @@ while True:
                         with open("ignore") as ign:
                             input("yep")
                             for v in ign.readlines():
-                                print(v)
+                                print(v
                                 mat = re.match(r"( |,)*[1-9]+ (file changed|deletion|insertion|files changed)", v)
                                 print(str(mat))
                                 input(str(mat))
