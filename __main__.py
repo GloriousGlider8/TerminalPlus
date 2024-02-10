@@ -634,7 +634,7 @@ while True:
                         with open("ignore") as ign:
                             for v in ign.readlines():
                                 print(v)
-                                matches = []
+                                matches = [""]
                                 idx = -1
                                 for i in v:
                                     if i == " " or i == ", ":
