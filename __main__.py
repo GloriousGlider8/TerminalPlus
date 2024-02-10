@@ -638,6 +638,7 @@ while True:
                                 mat = re.match(r"( |,)*[1-9]+ (file changed|deletion|insertion|files changed)", v)
                                 while mat != None:
                                     v = v.removeprefix(mat.match)
+                                    input(str(mat))
                                     print(mat.match)
                                     mat = re.match(r" [1-9]+ (file changed|deletion|insertion|files changed)", v)
                         if input("[true / false] force changes: ") == "true":
