@@ -787,14 +787,14 @@ while True:
             else:
                 print("Unknown command: " + args[0] + "\nIf this is an addon command, you can install it with the command reg\nIf you have already installed it, use rmv reg " + args[0] + " and then reg again.")
 
-#    except Exception as ex:
-#        template = "ERR\nTYP: {0}\nARG: {1!r}"
-#        message = template.format(type(ex).__name__, ex.args)
-#        print(message)
-#
-#        log("Exception: " + type(ex).__name__ + " {0!r}".format(ex.args), "ERROR")
-    finally:
-        print("")
+    except Exception as ex:
+        template = "ERR\nTYP: {0}\nARG: {1!r}"
+        message = template.format(type(ex).__name__, ex.args)
+        print(message)
+
+        log("Exception: " + type(ex).__name__ + " {0!r}".format(ex.args), "ERROR")
+#    finally:
+#        print("")
 
 if not cliExec:
     os.system("cls")
