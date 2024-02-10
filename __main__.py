@@ -17,6 +17,13 @@ noExec = False
 toExec = ""
 cliExec = False
 
+if os.name == "posix":
+    clearCmd = "clear"
+elif os.name == "nt":
+    clearCmd = "cls"
+else:
+    raise OSError(f"{c.Fore.RED}Invalid OS!{c.Style.RESET_ALL}")
+
 if len(sys.argv) > 1:
     if sys.argv[1] == "/c" or sys.argv[1] == "-C":
         toExec = " ".join(sys.argv[2:]) + " && exit"
@@ -68,7 +75,7 @@ with open(homePath + "\\data\\li", "r") as file:
 
 os.system("@echo off")
 if not cliExec:
-    os.system("cls")
+    os.system(clearCmd)
 
 def cmdExists(cmd):
     return os.system("cmd /c \"(help {0} > nul || exit 0) && where {0} > nul 2> nul\"".format(cmd)) == 0
@@ -124,14 +131,18 @@ if temp3 and temp2[1] == temp1[1]:
 for i in range(len(temp2)):
     temp2[i] = str(temp2[i])
 
+if os.name == "nt":
+    systemName = "Microsoft Windows"
+else:
+    systemName = "Linux (Any Distro)"
+
 about = """
 **************************************************
 
 --- About Terminal + ---
 
-Version: NT_10+11_{18}_py3.12.1_usr
-    System: NT
-    System Version: Windows 10 / 11
+Version: {19}_{18}_py3.12.1_usr
+    System: {20}
     Terminal + Software Version: {18}
     Intended Python Interpreter Version: {13}3.12.1{15}
     Current Python Interpreter Version: {13}{14}{15}
@@ -166,7 +177,7 @@ NOTE: None of this is ever sent without your consent!
 **************************************************
 
 --- Terminal + ---
-""".format(os.getenv("USERNAME"), os.getenv("USERPROFILE"), os.getenv("APPDATA"), os.getenv("USERDOMAIN"), os.getenv("COMPUTERNAME"), os.getenv("SYSTEMDRIVE"), os.getenv("NUMBER_OF_PROCESSORS"), os.getenv("PROCESSOR_ARCHITECTURE"), os.getenv("PROCESSOR_IDENTIFIER"), os.getenv("PROCESSOR_LEVEL"), str(os.cpu_count()), ip, lip, temp, ".".join(temp2), c.Style.RESET_ALL, homePath, ENVI, VER)
+""".format(os.getenv("USERNAME"), os.getenv("USERPROFILE"), os.getenv("APPDATA"), os.getenv("USERDOMAIN"), os.getenv("COMPUTERNAME"), os.getenv("SYSTEMDRIVE"), os.getenv("NUMBER_OF_PROCESSORS"), os.getenv("PROCESSOR_ARCHITECTURE"), os.getenv("PROCESSOR_IDENTIFIER"), os.getenv("PROCESSOR_LEVEL"), str(os.cpu_count()), ip, lip, temp, ".".join(temp2), c.Style.RESET_ALL, homePath, ENVI, VER, os.name.upper(), systemName)
 
 if not cliExec:
     print("--- Terminal + ---")
@@ -341,7 +352,7 @@ while True:
 
                     prg.render()
                     prg.keyMode(False)
-                    os.system("cls")
+                    os.system(clearCmd)
 
                     print("New: " + temp2)
 
@@ -420,7 +431,7 @@ while True:
                     get = args[1]
                     post = args[2]
 
-            os.system("cls")
+            os.system(clearCmd)
 
             prg = f.progressBar("Testing Connection", 21, c.Fore.GREEN, c.Fore.LIGHTGREEN_EX, c.Fore.CYAN)
             prg.increase(1)
@@ -463,7 +474,7 @@ while True:
             
             if temp1:
 
-                os.system("cls")
+                os.system(clearCmd)
 
                 prg.render()
 
@@ -472,14 +483,14 @@ while True:
                 temp3 = False
             else:
 
-                os.system("cls")
+                os.system(clearCmd)
                 prg.render()
                 print("Download\n" + get + "\n#:##:##\n" + c.Fore.RED + "Failed" + c.Style.RESET_ALL)
 
                 temp3 = True
             bt = str(datetime.datetime.now()).split(" ")[1]
 
-            os.system("cls")
+            os.system(clearCmd)
             prg.setTitle("Testing Connection: POST")
             prg.render()
 
@@ -516,20 +527,20 @@ while True:
 
             upl = delta
 
-            os.system("cls")
+            os.system(clearCmd)
 
             if temp1:
-                os.system("cls")
+                os.system(clearCmd)
 
                 prg.render()
                 print("Upload\n" + post + "\n" + str(delta) + "\n" + c.Fore.GREEN + "Completed" + c.Style.RESET_ALL)
             else:
-                os.system("cls")
+                os.system(clearCmd)
 
                 prg.render()
                 print("Upload\n" + post + "\n#:##:##\n" + c.Fore.RED + "Failed" + c.Style.RESET_ALL)
 
-            os.system("cls")
+            os.system(clearCmd)
 
             if temp3:
                 print("GET: " + c.Fore.RED + "Failed" + c.Style.RESET_ALL + " in: " + str(dwn) + c.Fore.RED + " ERR" + c.Style.RESET_ALL)
@@ -620,10 +631,10 @@ while True:
                 f.upAndClear()
                 prg.render()
                 prg.keyMode(False)
-                os.system("cls")
+                os.system(clearCmd)
                 print("\n--- Terminal + ---\n")
         elif args[0] == "clear":
-            os.system("cls")
+            os.system(clearCmd)
         elif args[0] == "dev":
             if os.path.exists(f"{os.getenv("APPDATA")}\\TerminalPlus\\{ENVI}\\DEV"):
                 if args[1] == "commit" or args[1] == "push":
@@ -749,7 +760,7 @@ while True:
                                     raise Exception(f"{c.Fore.RED}User failed to enter installation name.{c.Style.RESET_ALL}")
                         os.system("rmdir \"" + inst + "\" /S /Q")
                         os.system("rmdir " + os.getenv("AppData") + "\"\\TerminalPlus\\" + instN + "\" /S /Q")
-                        os.system("cls")
+                        os.system(clearCmd)
                         print(f"Removed Installation {instN}")
             elif args[1] == "list":
                 temp = g.glob(os.getenv("AppData") + "\\TerminalPlus\\*")
@@ -797,4 +808,4 @@ while True:
 #        print("")
 
 if not cliExec:
-    os.system("cls")
+    os.system(clearCmd)
