@@ -643,7 +643,7 @@ while True:
                                         print(f"{str(len(matches))} {str(idx)}")
                                         while len(matches) < idx:
                                             matches.append("")
-                                            print("e") 
+                                            print("e")
                                         matches[idx] = matches[idx] + i
                                 for i in matches:
                                     print(i)
