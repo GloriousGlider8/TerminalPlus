@@ -636,10 +636,9 @@ while True:
                             for v in ign.readlines():
                                 print(v)
                                 mat = re.match(r"( |,)*[1-9]+ (file changed|deletion|insertion|files changed)", v)
-                                print(str(mat))
-                                input(str(mat))
                                 while mat != None:
-                                    print(str(re.Match))
+                                    v = v.removeprefix(mat.match)
+                                    print(mat.match)
                                     mat = re.match(r" [1-9]+ (file changed|deletion|insertion|files changed)", v)
                         if input("[true / false] force changes: ") == "true":
                             if os.system("git push origin main --force > ignore") == 0:
