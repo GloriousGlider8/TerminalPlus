@@ -644,7 +644,7 @@ while True:
                                     else:
                                         matches[idx] = matches[idx] + i
                                 for i in matches:
-                                    print(i) 
+                                    print(i)
                         if input("[true / false] force changes: ") == "true":
                             if os.system("git push origin main --force > ignore") == 0:
                                 print(f"{c.Fore.GREEN}Successfully opened a pull request to main branch!{c.Style.RESET_ALL}")
