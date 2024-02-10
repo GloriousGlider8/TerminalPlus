@@ -640,7 +640,7 @@ while True:
                                     if i == " " or i == ", ":
                                         idx += 1
                                     else:
-                                        if len(matches) + 1 < idx:
+                                        while len(matches) + 1 < idx:
                                             matches.append("")
                                         matches[idx] = matches[idx] + i
                                 for i in matches:
