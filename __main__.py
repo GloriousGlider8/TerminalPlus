@@ -635,7 +635,7 @@ while True:
                             input("yep")
                             for v in ign.readlines():
                                 print(v)
-                                mat = re.match(r"[1-9]+ (file changed|deletion|insertion|files changed)", v)
+                                mat = re.match(r" [1-9]+ (file changed|deletion|insertion|files changed)", v)
                                 print(str(mat))
                                 input(str(mat))
                                 while mat != None:
