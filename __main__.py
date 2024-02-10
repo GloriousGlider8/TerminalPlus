@@ -638,7 +638,7 @@ while True:
                                         mat = re.match(r"[1-9]+ (file changed|deletion|insertion|files changed)", v)
                                         while mat != None:
                                             print(str(re.Match))
-                                            mat = re.match(r"[1-9]+ (file changed|deletion|insertion|files changed)", v)
+                                            mat = re.match(r" [1-9]+ (file changed|deletion|insertion|files changed)", v)
                                 print(f"{c.Fore.GREEN}Successfully opened a pull request to main branch!{c.Style.RESET_ALL}")
                             else:
                                 print(f"{c.Fore.RED}Failed to push changes!{c.Style.RESET_ALL}")
