@@ -640,9 +640,10 @@ while True:
                                     if i == " " or i == ", ":
                                         idx += 1
                                     else:
+                                        print(f"{str(len(matches))} {str(idx)}")
                                         while len(matches) < idx:
                                             matches.append("")
-                                            print("e")
+                                            print("e") 
                                         matches[idx] = matches[idx] + i
                                 for i in matches:
                                     print(i)
