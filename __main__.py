@@ -680,8 +680,12 @@ while True:
                     os.chdir(homePath)
                 elif args[1] == "pull":
                     os.chdir(f"{homePath}/code")
-                    if os.system("git pull") == 0:
-                        print(f"{c.Fore.GREEN}Successfully pulled main branch!{c.Style.RESET_ALL}")
+                    if os.system("git pull > ignore") == 0:
+                        with open("ignore") as ign:
+                            if ign.read().find("Already up to date.") != -1:
+                                print(f"{c.Fore.YELLOW}You're on the latest version already!{c.Style.RESET_ALL}")
+                            else:
+                                print(f"{c.Fore.GREEN}Successfully pulled main branch!{c.Style.RESET_ALL}")
                     else:
                         print(f"{c.Fore.RED}Failed to pull changes!{c.Style.RESET_ALL}")
                     os.chdir(homePath)
