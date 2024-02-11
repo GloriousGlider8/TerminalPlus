@@ -1,0 +1,4 @@
+gg8lib>=1.0.0
+colorama>=1.0.0
+keyboard>=1.0.0
+requests>=1.0.0
