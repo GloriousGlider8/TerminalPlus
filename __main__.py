@@ -663,14 +663,14 @@ while True:
                             f._upAndClear()
                             print(f"[true / false] force changes: {c.Fore.GREEN}true\n{c.Fore.YELLOW}Forcing changes should only be done if you know what you're doing!{c.Style.RESET_ALL}")
                             if os.system("git push origin main --force > ignore") == 0:
-                                print(f"{c.Fore.GREEN}Successfully opened a pull request to main branch!{c.Style.RESET_ALL}")
+                                print(f"{c.Fore.GREEN}Successfully pushed to main branch!{c.Style.RESET_ALL}")
                             else:
                                 print(f"{c.Fore.RED}Failed to push changes!{c.Style.RESET_ALL}")
                         else:
                             f._upAndClear()
                             print(f"[true / false] force changes: {c.Fore.RED}false{c.Style.RESET_ALL}")
                             if os.system("git push origin main > ignore") == 0:
-                                print(f"{c.Fore.GREEN}Successfully opened a pull request to main branch!{c.Style.RESET_ALL}")
+                                print(f"{c.Fore.GREEN}Successfully pushed to main branch!{c.Style.RESET_ALL}")
                             else:
                                 print(f"{c.Fore.RED}Failed to push changes!{c.Style.RESET_ALL}")
                         os.rename(f"{homePath}/code/addon-test.py", f"{homePath}/addons/addon-test.py")
@@ -714,6 +714,17 @@ while True:
                                 print(f"{c.Fore.BLUE}{v["date"]} {c.Fore.LIGHTBLUE_EX}{v["msg"]}{c.Style.RESET_ALL}")
                     else:
                         print(f"{c.Fore.RED}Failed to get commits!{c.Style.RESET_ALL}")
+                    os.chdir(homePath)
+                elif args[1] == "store":
+                    os.chdir(f"{homePath}/code")
+                    if args[2] == "list":
+                        if os.system("git stash list --oneline > ignore") == 0:
+                            with open("ignore") as ign:
+                                stashes = f.gitStashParse(ign.read())
+                                for v in stashes:
+                                    print(f"{c.Fore.LIGHTBLUE_EX}{v["hash"]} {c.Fore.BLUE}{v["comment"]}{c.Style.RESET_ALL}")
+                        else:
+                            print(f"{c.Fore.RED}Failed to gather store!{c.Style.RESET_ALL}")
                     os.chdir(homePath)
             else:
                 print(f"{c.Fore.RED}This installation is not a development one!{c.Style.RESET_ALL}")
