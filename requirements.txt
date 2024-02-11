@@ -1,0 +1,4 @@
+gg8lib
+colorama
+keyboard
+requests

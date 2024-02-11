@@ -11,7 +11,6 @@ Read [License](https://github.com/GloriousGlider8/TerminalPlus/blob/main/LICENSE
 * PyPi package: **gg8lib**
 * PyPi package: **colorama**
 * PyPi package: **keyboard**
-* PyPi package: **colorama**
 * PyPi package: **requests**
 
 # BY-NC-SA
