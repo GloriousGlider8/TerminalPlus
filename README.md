@@ -4,7 +4,7 @@
 
 **If you are granted permission by GloriousGlider8, you may be part of an exception**
 
-Read [License](https://github.com/GloriousGlider8/TerminalPlus/blob/main/LICENSE "LICENSE") for more info!
+Read [License](https://github.com/GloriousGlider8/TerminalPlus/blob/main/LICENSE "LICENSE") for more info and click [here](https://github.com/GloriousGlider8/TerminalPlus/blob/main/README.md#BY-NC-SA)!
 
 # Requirements
 
@@ -13,3 +13,11 @@ Read [License](https://github.com/GloriousGlider8/TerminalPlus/blob/main/LICENSE
 * PyPi package: **keyboard**
 * PyPi package: **colorama**
 * PyPi package: **requests**
+
+# BY-NC-SA
+
+**BY** You must give proper credit when sharing.
+
+**NC** You may not sell copies of the software (editied or not).
+
+**SA** You must include the CC BY-NC-SA license in all copies.
