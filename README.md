@@ -21,3 +21,5 @@ Read [License](https://github.com/GloriousGlider8/TerminalPlus/blob/main/LICENSE
 **NC** You may not sell copies of the software (editied or not).
 
 **SA** You must include the CC BY-NC-SA license in all copies.
+
+**This is an oversimplification! See [here](http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1) for the full version.**
