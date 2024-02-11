@@ -223,7 +223,7 @@ while True:
         if args[0] == "exit":
             break
         elif args[0] == "pytest":
-            if f.selPrompt(["Yes", "No"], [">", ">"], "You may not have python installed correctly on your computer.\nUsing addons and other features requires python.\nWould you like to install it?") == 0:
+            if f.selPrompt(["Yes", "No"], [">", "<"], "You may not have python installed correctly on your computer.\nUsing addons and other features requires python.\nWould you like to install it?") == 0:
                 if not cmdExists("pip"):
                     os.system("python")
                 else:
@@ -252,7 +252,7 @@ while True:
         elif args[0] == "env":
             if len(args) >= 4:
                 if args[1] == "set":
-                    os.system("set " + args[2] + "=" + args[3])
+                    os.system("set " + args[2] + " = " + args[3])
                     if os.getenv(args[2]) == args[3]:
                         print("Set Environment Variable: " + args[2] + " to: " + args[3])
                     else:
@@ -266,12 +266,12 @@ while True:
             if cmdExists("pip"):
                 os.system("python")
             else:
-                if f.selPrompt(["Yes", "No"], [">", ">"], "You do not have python installed correctly on your computer.\nUsing addons and other features requires python.\nWould you like to install it?") == 0:
+                if f.selPrompt(["Yes", "No"], [">", "<"], "You do not have python installed correctly on your computer.\nUsing addons and other features requires python.\nWould you like to install it?") == 0:
                     os.system("python")
 
             print("\n--- Terminal + ---\n")
         elif args[0] == "pip":
-            print("--- Preferred Installer Program (Python) ---\nInstall or uninstall packages from PyPi\n")
+            print("--- Preferred Installer Program (Python) ---\n")
             if cmdExists("pip"):
                 while True:
                     cmd = input("PIP >>> ")
@@ -281,7 +281,7 @@ while True:
                     else:
                         break
             else:
-                if f.selPrompt(["Yes", "No"], [">", ">"], "You do not have python installed correctly on your computer.\nUsing addons and other features requires python.\nWould you like to install it?") == 0:
+                if f.selPrompt(["Yes", "No"], [">", "<"], "You do not have python installed correctly on your computer.\nUsing addons and other features requires python.\nWould you like to install it?") == 0:
                     os.system("python")
             
             print("--- Terminal + ---\n")
@@ -297,6 +297,13 @@ while True:
                 else:
                     if input("[true / false] Silent: ") == "true":
                         silent = True
+                    
+                    if silent:
+                        f._upAndClear()
+                        print(f"[true / false] Silent: {c.Fore.GREEN}true{c.Style.RESET_ALL}")
+                    else:
+                        f._upAndClear()
+                        print(f"[true / false] Silent: {c.Fore.RED}false{c.Style.RESET_ALL}")
             else:
                 reg = input("[filepath] File: ")
                 if input("[true / false] Silent: ") == "true":
@@ -346,9 +353,6 @@ while True:
 
                     if os.system("copy " + reg + " " + homePath + "/addons/" + temp2 + ".py") != 0:
                         raise Exception(f"{c.Fore.RED}Failed to install!{c.Style.RESET_ALL}")
-
-                    #f.upAndClear()
-                    #f.upAndClear()
 
                     prg.render()
                     prg.keyMode(False)
