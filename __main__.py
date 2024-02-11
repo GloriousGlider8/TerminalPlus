@@ -58,17 +58,17 @@ else:
 
 os.chdir(homePath)
 
-with open(homePath + "\\data\\li", "r") as file:
+with open(homePath + "/data/li", "r") as file:
     lip = str(file.read())
 
     file.close()
 
     if lip != str(ip):
-        os.remove(homePath + "\\data\\li")
+        os.remove(homePath + "/data/li")
         
         print("\nPrivate IP changed from " + lip + " to " + ip + "\n")
 
-        with open(homePath + "\\data\\li", "w") as file1:
+        with open(homePath + "/data/li", "w") as file1:
             file1.write(str(ip))
 
         time.sleep(1.5)
@@ -85,25 +85,25 @@ if not cmdExists("python"):
         os.system("python")
 
 def log(content, typ):
-    logs = open(homePath + "\\data\\termP.log", "a")
+    logs = open(homePath + "/data/termP.log", "a")
 
-    logs.write("\n{0} [{1}] [{2}] [{3}] {4}".format(pcname + "\\" + domain + "\\" + uname, str(ip), typ, str(datetime.datetime.now()).split(" ")[1].split(".")[0], content))
+    logs.write("\n{0} [{1}] [{2}] [{3}] {4}".format(pcname + "/" + domain + "/" + uname, str(ip), typ, str(datetime.datetime.now()).split(" ")[1].split(".")[0], content))
 
     logs.close()
 
 def clearLog():
-    os.remove(homePath + "\\data\\termP.log")
+    os.remove(homePath + "/data/termP.log")
 
-    logs = open(homePath + "\\data\\termP.log", "x")
+    logs = open(homePath + "/data/termP.log", "x")
 
-    logs.write("{0} [{1}] [{2}] [{3}] {4}".format(pcname + "\\" + domain + "\\" + uname, str(ip), "INFO", str(datetime.datetime.now()).split(" ")[1].split(".")[0], "Logs Cleared"))
+    logs.write("{0} [{1}] [{2}] [{3}] {4}".format(pcname + "/" + domain + "/" + uname, str(ip), "INFO", str(datetime.datetime.now()).split(" ")[1].split(".")[0], "Logs Cleared"))
 
     logs.close()
 
 def ftlKBI():
-    logs = open(homePath + "\\data\\termP.log", "a")
+    logs = open(homePath + "/data/termP.log", "a")
 
-    logs.write("\n{0} [{1}] [{2}] [{3}] {4}".format(pcname + "\\" + domain + "\\" + uname, str(ip), "FATAL", str(datetime.datetime.now()).split(" ")[1].split(".")[0], "Keyboard Crash (CTRL+C)"))
+    logs.write("\n{0} [{1}] [{2}] [{3}] {4}".format(pcname + "/" + domain + "/" + uname, str(ip), "FATAL", str(datetime.datetime.now()).split(" ")[1].split(".")[0], "Keyboard Crash (CTRL+C)"))
 
     logs.close()
 
@@ -171,8 +171,8 @@ CPU Count: {10}
 
 NOTE: None of this is ever sent without your consent!
 
-(Stored in data\\termP.log) IP: {11}
-(Stored in data\\li) Last IP: {12}
+(Stored in data/termP.log) IP: {11}
+(Stored in data/li) Last IP: {12}
 
 **************************************************
 
@@ -192,7 +192,7 @@ while True:
 
             log(cmd, "AUTO_EXEC")
         else:
-            cmd = input("\n" + pcname + "\\" + domain + "\\" + uname + " >> ")
+            cmd = input("\n" + pcname + "/" + domain + "/" + uname + " >> ")
 
             log(cmd, "MANUAL_EXEC")
 
@@ -324,13 +324,13 @@ while True:
 
                     time.sleep(1.5)
 
-                    with open(homePath + "\\data\\addonsdef.json", "r") as temp1:
+                    with open(homePath + "/data/addonsdef.json", "r") as temp1:
                         temp = json.load(temp1)
 
                     temp2 = input("[string] Command Name: ")
                     f.upAndClear()
 
-                    with open(homePath + "\\data\\addonsdef.json", "w") as temp1:
+                    with open(homePath + "/data/addonsdef.json", "w") as temp1:
                         temp.append(temp2)
                         temp1.write(json.dumps(temp))
 
@@ -344,7 +344,7 @@ while True:
 
                     time.sleep(2.5)
 
-                    if os.system("copy " + reg + " " + homePath + "\\addons\\" + temp2 + ".py") != 0:
+                    if os.system("copy " + reg + " " + homePath + "/addons/" + temp2 + ".py") != 0:
                         raise Exception(f"{c.Fore.RED}Failed to install!{c.Style.RESET_ALL}")
 
                     #f.upAndClear()
@@ -360,21 +360,21 @@ while True:
                 else:
                     time.sleep(1.5)
 
-                    with open(homePath + "\\data\\addonsdef.json", "r") as temp1:
+                    with open(homePath + "/data/addonsdef.json", "r") as temp1:
                         temp = json.load(temp1)
 
-                    os.remove(homePath + "\\data\\addonsdef.json")
+                    os.remove(homePath + "/data/addonsdef.json")
 
                     temp2 = input("[string] Command Name: ")
                     f.upAndClear()
 
-                    with open(homePath + "\\data\\addonsdef.json", "w") as temp1:
+                    with open(homePath + "/data/addonsdef.json", "w") as temp1:
                         temp.append(temp2)
                         temp1.write(json.dumps(temp))
 
                     time.sleep(2.5)
 
-                    if os.system("copy " + reg + " " + homePath + "\\addons\\" + temp2 + ".py") != 0:
+                    if os.system("copy " + reg + " " + homePath + "/addons/" + temp2 + ".py") != 0:
                         raise Exception(f"{c.Fore.RED}Failed to install!{c.Style.RESET_ALL}")
 
                     time.sleep(3)
@@ -602,7 +602,7 @@ while True:
                 prg.render()
                 prg.increase(7)
                 prg.setTitle("Editing addon dictionary")
-                temp = open(homePath + "\\data\\addonsdef.json")
+                temp = open(homePath + "/data/addonsdef.json")
                 temp1 = json.load(temp)
                 temp.close()
                 f.upAndClear()
@@ -610,8 +610,8 @@ while True:
                 prg.render()
                 prg.increase(6)
                 prg.setTitle("Removing script file")
-                os.remove(homePath + "\\data\\addonsdef.json")
-                temp = open(homePath + "\\data\\addonsdef.json", "x")
+                os.remove(homePath + "/data/addonsdef.json")
+                temp = open(homePath + "/data/addonsdef.json", "x")
                 temp2 = []
                 for v in temp1:
                     if v != rmv:
@@ -623,8 +623,8 @@ while True:
                 prg.render()
                 prg.increase(1)
                 prg.setTitle("Removed registration for " + rmv)
-                if os.path.exists(homePath + "\\addons\\" + rmv + ".py"):
-                    os.remove(homePath + "\\addons\\" + rmv + ".py")
+                if os.path.exists(homePath + "/addons/" + rmv + ".py"):
+                    os.remove(homePath + "/addons/" + rmv + ".py")
                 else:
                     raise Exception(f"{c.Fore.RED}Failed to delete addon script!{c.Style.RESET_ALL}")
                 f.upAndClear()
@@ -636,10 +636,10 @@ while True:
         elif args[0] == "clear":
             os.system(clearCmd)
         elif args[0] == "dev":
-            if os.path.exists(f"{os.getenv("APPDATA")}\\TerminalPlus\\{ENVI}\\DEV"):
+            if os.path.exists(f"{os.getenv("APPDATA")}/TerminalPlus/{ENVI}/DEV"):
                 if args[1] == "commit" or args[1] == "push":
-                    os.chdir(f"{homePath}\\code")
-                    os.rename(f"{homePath}\\addons\\addon-test.py", f"{homePath}\\code\\addon-test.py")
+                    os.chdir(f"{homePath}/code")
+                    os.rename(f"{homePath}/addons/addon-test.py", f"{homePath}/code/addon-test.py")
                     os.system("git add addon-test.py > ignore")
                     if os.system(f"git commit -a -m \"Generated by T+ DEV: {"''".join(input("[string] Commit message: ").split("\""))}\" > ignore") == 0:
                         with open("ignore") as ign:
@@ -648,14 +648,14 @@ while True:
                                 try:
                                     input("Press [ENTER] to commit globally and [CTRL] + [Z], then [ENTER] to locally")
                                 except EOFError:
-                                    os.rename(f"{homePath}\\code\\addon-test.py", f"{homePath}\\addons\\addon-test.py")
+                                    os.rename(f"{homePath}/code/addon-test.py", f"{homePath}/addons/addon-test.py")
                                     os.system("git commit -a -m \"Generated by T+ DEV: AUTO COMMIT\" > ignore")
                                     raise Exception("Local commit only")
                             if os.name == "posix":
                                 try:
                                     input("Press [ENTER] to commit globally and [CTRL] + [D] to only commit locally")
                                 except EOFError:
-                                    os.rename(f"{homePath}\\code\\addon-test.py", f"{homePath}\\addons\\addon-test.py")
+                                    os.rename(f"{homePath}/code/addon-test.py", f"{homePath}/addons/addon-test.py")
                                     os.system("git commit -a -m \"Generated by T+ DEV: AUTO COMMIT\" > ignore")
                                     raise Exception("Local commit only")
                             
@@ -669,26 +669,26 @@ while True:
                                 print(f"{c.Fore.GREEN}Successfully opened a pull request to main branch!{c.Style.RESET_ALL}")
                             else:
                                 print(f"{c.Fore.RED}Failed to push changes!{c.Style.RESET_ALL}")
-                        os.rename(f"{homePath}\\code\\addon-test.py", f"{homePath}\\addons\\addon-test.py")
+                        os.rename(f"{homePath}/code/addon-test.py", f"{homePath}/addons/addon-test.py")
                         os.system("git commit -a -m \"Generated by T+ DEV: AUTO COMMIT\" > ignore")
                     else:
                         print(f"{c.Fore.RED}Failed to push changes!{c.Style.RESET_ALL}")
                     os.chdir(homePath)
                 elif args[1] == "pull":
-                    os.chdir(f"{homePath}\\code")
+                    os.chdir(f"{homePath}/code")
                     if os.system("git pull") == 0:
                         print(f"{c.Fore.GREEN}Successfully pulled main branch!{c.Style.RESET_ALL}")
                     else:
                         print(f"{c.Fore.RED}Failed to pull changes!{c.Style.RESET_ALL}")
                     os.chdir(homePath)
                 elif args[1] == "exit":
-                    if os.system(f"rmdir {homePath}\\code\\.git /S /Q") == 0:
-                        os.remove(f"{os.getenv("APPDATA")}\\TerminalPlus\\{ENVI}\\DEV")
+                    if os.system(f"rmdir {homePath}/code/.git /S /Q") == 0:
+                        os.remove(f"{os.getenv("APPDATA")}/TerminalPlus/{ENVI}/DEV")
                         print(f"{c.Fore.GREEN}Successfully exited dev mode!{c.Style.RESET_ALL}")
                     else:
                         print(f"{c.Fore.RED}Failed to exit dev mode!{c.Style.RESET_ALL}")
                 elif args[1] == "log":
-                    os.chdir(f"{homePath}\\code")
+                    os.chdir(f"{homePath}/code")
                     if os.system("git log --graph --pretty=\"{~%ad~}/~%s~/\" --date=human > ignore") == 0:
                         with open("ignore") as output:
                             out = []
@@ -708,7 +708,7 @@ while True:
                 print(f"{c.Fore.RED}This installation is not a development one!{c.Style.RESET_ALL}")
         elif args[0] == "log":
             if args[1] == "read":
-                temp = open(homePath + "\\data\\termP.log")
+                temp = open(homePath + "/data/termP.log")
                 temp1 = temp.read()
                 temp.close()
                 temp1 = str(c.Fore.RED + "FATAL" + c.Style.RESET_ALL).join(temp1.split("FATAL"))
@@ -717,7 +717,7 @@ while True:
                 temp1 = str(c.Fore.GREEN + "STARTUP" + c.Style.RESET_ALL).join(temp1.split("STARTUP"))
                 print("\n--- Logs ---\n")
                 print(temp1)
-                print(f"Log Size: {c.Fore.YELLOW}" + str(round(os.stat(homePath + "\\data\\termP.log").st_size / (1024 * 1024), 2)) + f" MiB{c.Style.RESET_ALL}")
+                print(f"Log Size: {c.Fore.YELLOW}" + str(round(os.stat(homePath + "/data/termP.log").st_size / (1024 * 1024), 2)) + f" MiB{c.Style.RESET_ALL}")
                 print("\n--- Terminal + ---\n")
             elif args[1] == "write":
                 log("[" + args[2] + "] " + str(" ").join(args[3:len(args) - 1]), args[len(args) - 1])
@@ -728,26 +728,26 @@ while True:
             if args[1] == "new":
                 print("\n--- Installation Setup ---\n")
                 if f.selPrompt(["Yes", "No"], [">", "<"], "Are you sure you would like to setup a new installation?") == 0:
-                    runpy.run_path(homePath + "\\code\\newEnv.py")
+                    runpy.run_path(homePath + "/code/newEnv.py")
                 print("\n--- Terminal + ---\n")
             elif args[1] == "open":
                 inst = input("[string] (Leave blank to open with directory) Installation name to open: ")
                 if inst == "":
                     inst = input("[directory] Installation directory to open: ")
                 else:
-                    if os.path.exists(os.getenv("AppData") + "\\TerminalPlus\\" + inst + "\\PATH"):
-                        temp = open(os.getenv("AppData") + "\\TerminalPlus\\" + inst + "\\PATH")
+                    if os.path.exists(os.getenv("AppData") + "/TerminalPlus/" + inst + "/PATH"):
+                        temp = open(os.getenv("AppData") + "/TerminalPlus/" + inst + "/PATH")
                         inst = temp.read()
                         temp.close()
                     else:
                         print(f"{c.Fore.RED} Invalid Installation")
                 
-                os.system(f"python \"{inst}\"\\code")
+                os.system(f"python \"{inst}\"/code")
             elif args[1] == "del":
                 if f.selPrompt([c.Fore.YELLOW + "Yes" + c.Style.RESET_ALL, "No"], ["!", "<"], "Are you sure you want to delete an installation?") == 0:
                     print(c.Fore.BLUE + "Hint: MAIN is the installation that starts up and is installed by deafult." + c.Style.RESET_ALL)
                     inst = input("[string] Installation name to delete: ")
-                    temp = open(os.getenv("AppData") + "\\TerminalPlus\\" + inst + "\\PATH")
+                    temp = open(os.getenv("AppData") + "/TerminalPlus/" + inst + "/PATH")
                     instN = inst
                     inst = temp.read()
                     temp.close()
@@ -759,26 +759,26 @@ while True:
                                 if input("1: ") != instN:
                                     raise Exception(f"{c.Fore.RED}User failed to enter installation name.{c.Style.RESET_ALL}")
                         os.system("rmdir \"" + inst + "\" /S /Q")
-                        os.system("rmdir " + os.getenv("AppData") + "\"\\TerminalPlus\\" + instN + "\" /S /Q")
+                        os.system("rmdir " + os.getenv("AppData") + "\"/TerminalPlus/" + instN + "\" /S /Q")
                         os.system(clearCmd)
                         print(f"Removed Installation {instN}")
             elif args[1] == "list":
-                temp = g.glob(os.getenv("AppData") + "\\TerminalPlus\\*")
+                temp = g.glob(os.getenv("AppData") + "/TerminalPlus/*")
 
                 for v in temp:
-                    if v.removeprefix(os.getenv("AppData") + "\\TerminalPlus\\").find("\\") == -1 and os.path.isdir(v) and v.removeprefix(os.getenv("AppData") + "\\TerminalPlus\\") != "SYS-CMD" and v.removeprefix(os.getenv("AppData") + "\\TerminalPlus\\") != "SYS-RES":
-                        temp1 = open(v + "\\PATH")
+                    if v.removeprefix(os.getenv("AppData") + "/TerminalPlus/").find("/") == -1 and os.path.isdir(v) and v.removeprefix(os.getenv("AppData") + "/TerminalPlus/") != "SYS-CMD" and v.removeprefix(os.getenv("AppData") + "/TerminalPlus/") != "SYS-RES":
+                        temp1 = open(v + "/PATH")
                         temp2 = temp1.read()
                         temp1.close()
-                        if v == f"{os.getenv("APPDATA")}\\TerminalPlus\\MAIN":
-                            print(f"{c.Fore.BLUE}PROTECTED{c.Style.RESET_ALL} [ENV] " + v.removeprefix(os.getenv("AppData") + "\\TerminalPlus\\") + " " + temp2)
-                        elif os.path.exists(f"{v}\\DEV"):
-                            print(f"{c.Fore.GREEN}DEV{c.Style.RESET_ALL} [ENV] " + v.removeprefix(os.getenv("AppData") + "\\TerminalPlus\\") + " " + temp2)
+                        if v == f"{os.getenv("APPDATA")}/TerminalPlus/MAIN":
+                            print(f"{c.Fore.BLUE}PROTECTED{c.Style.RESET_ALL} [ENV] " + v.removeprefix(os.getenv("AppData") + "/TerminalPlus/") + " " + temp2)
+                        elif os.path.exists(f"{v}/DEV"):
+                            print(f"{c.Fore.GREEN}DEV{c.Style.RESET_ALL} [ENV] " + v.removeprefix(os.getenv("AppData") + "/TerminalPlus/") + " " + temp2)
                         else:
-                            print("[ENV] " + v.removeprefix(os.getenv("AppData") + "\\TerminalPlus\\") + " " + temp2)
+                            print("[ENV] " + v.removeprefix(os.getenv("AppData") + "/TerminalPlus/") + " " + temp2)
         else:
             found = False
-            temp = open(homePath + "\\data\\addonsdef.json")
+            temp = open(homePath + "/data/addonsdef.json")
 
             temp1 = json.load(temp)
 
@@ -790,11 +790,11 @@ while True:
                     break
             
             if found:
-                temp = open(homePath + "\\data\\args.json", "w")
+                temp = open(homePath + "/data/args.json", "w")
                 temp.write(json.dumps(args))
                 temp.close()
 
-                runpy.run_path(homePath + "\\addons\\" + args[0] + ".py")
+                runpy.run_path(homePath + "/addons/" + args[0] + ".py")
             else:
                 print("Unknown command: " + args[0] + "\nIf this is an addon command, you can install it with the command reg\nIf you have already installed it, use rmv reg " + args[0] + " and then reg again.")
 
