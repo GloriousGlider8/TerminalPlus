@@ -1,4 +1,4 @@
-gg8lib>=0.1.0
-colorama>=0.1.0
-keyboard>=0.1.0
-requests>=0.1.0
+gg8lib
+colorama
+keyboard
+requests
