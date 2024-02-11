@@ -643,7 +643,7 @@ while True:
                     os.system("git add addon-test.py > ignore")
                     if os.system(f"git commit -a -m \"{"''".join(input("[string] Commit message: ").split("\""))}\" > ignore") == 0:
                         with open("ignore") as ign:
-                            print(f.gitCommitParse(ign.readlines()[1]))
+                            print(f.gitCommitBeautify(f.gitCommitParse(ign.read())))
                             if os.name == "nt":
                                 try:
                                     input("Press [ENTER] to commit globally and [CTRL] + [Z], then [ENTER] to locally")
@@ -685,7 +685,8 @@ while True:
                             if ign.read().find("Already up to date.") != -1:
                                 print(f"{c.Fore.YELLOW}You're on the latest version already!{c.Style.RESET_ALL}")
                             else:
-                                print(f"{c.Fore.GREEN}Successfully pulled main branch!{c.Style.RESET_ALL}")
+                                print(f"{c.Fore.GREEN}Successfully pulled main branch!{c.Style.RESET_ALL}\nChanges:")
+                                print(f.gitCommitBeautify(f.gitCommitParse(ign.read())))
                     else:
                         print(f"{c.Fore.RED}Failed to pull changes!{c.Style.RESET_ALL}")
                     os.chdir(homePath)
