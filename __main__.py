@@ -419,10 +419,32 @@ while True:
                 print(str(requests.post(args[2], json.loads(" ".join(args[3:len(args)]))).content))
         elif args[0] == "pkg":
             if args[1] == "install":
-                print(f"Using {c.Fore.GREEN}GitHub{c.Style.RESET_ALL} for package search...")
+                print(f"Using {c.Fore.BLUE}GitHub{c.Style.RESET_ALL} for package search...")
                 if len(args) <= 2:
-                    input("[string] GitHub Repo (author/repo/branch): ")
-                
+                    split = input("[string] GitHub Repo (author/repo/branch): ").split(" ")
+                    
+                    author = split[0]
+                    repo = split[1]
+                    
+                    if len(split) < 3:
+                        branch = "main"
+                    else:
+                        branch = split[2]
+                        
+                    prg = f.progressBar(f"Installing package: {" ".join(split)}", 5, c.Fore.GREEN, c.Fore.LIGHTGREEN_EX, c.Fore.LIGHTBLUE_EX)
+                    
+                    try:
+                        data = requests.get(f"https://raw.githubusercontent.com/{author}/{repo}/{branch}/data.jsonc").content
+                        os.mkdir(f"{homePath}/pkg")
+                        with open(f"{homePath}/pkg/data.json", "w") as dataf:
+                            for v in data.split("\n"):
+                                if v != "" and not v.startswith("//"):
+                                    dataf.write(f"{v}\n")
+                        
+                        datajs = "lol"
+                    except:
+                        prg.keyMode(False)
+                        prg.log(f"{c.Fore.RED}Failed to install package!{c.Style.RESET_ALL}")
                 print(f"")
         elif args[0] == "ctest":
             get = "http://httpbin.org/get"
