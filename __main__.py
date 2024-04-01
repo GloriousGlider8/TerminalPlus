@@ -11,7 +11,6 @@ import colorama as c
 import gg8lib as f
 import glob as g
 import sys
-import re
 
 noExec = False
 toExec = ""
@@ -132,9 +131,9 @@ for i in range(len(temp2)):
     temp2[i] = str(temp2[i])
 
 if os.name == "nt":
-    systemName = "Microsoft Windows"
+    systemName = "Microsoft NT (e.g. Windows)"
 else:
-    systemName = "Linux (Any Distro)"
+    systemName = "Unix-based (e.g. Linux, Mac)"
 
 about = """
 **************************************************
@@ -321,8 +320,8 @@ while True:
 
                     time.sleep(0.5)
 
-                    f.upAndClear()
-                    f.upAndClear()
+                    f._upAndClear()
+                    f._upAndClear()
 
                     prg.render()
 
@@ -335,14 +334,14 @@ while True:
                         temp = json.load(temp1)
 
                     temp2 = input("[string] Command Name: ")
-                    f.upAndClear()
+                    f._upAndClear()
 
                     with open(homePath + "/data/addonsdef.json", "w") as temp1:
                         temp.append(temp2)
                         temp1.write(json.dumps(temp))
 
-                    f.upAndClear()
-                    f.upAndClear()
+                    f._upAndClear()
+                    f._upAndClear()
 
                     prg.render()
 
@@ -370,7 +369,7 @@ while True:
                     os.remove(homePath + "/data/addonsdef.json")
 
                     temp2 = input("[string] Command Name: ")
-                    f.upAndClear()
+                    f._upAndClear()
 
                     with open(homePath + "/data/addonsdef.json", "w") as temp1:
                         temp.append(temp2)
@@ -411,7 +410,7 @@ while True:
         elif args[0] == "wait":
             time.sleep(float(args[1]))
         elif args[0] == "clearln":
-            f.upAndClear()
+            f._upAndClear()
         elif args[0] == "http":
             if args[1] == "get":
                 print(str(requests.get(args[2], json.loads(" ".join(args[3:len(args)]))).content))
@@ -420,32 +419,74 @@ while True:
         elif args[0] == "pkg":
             if args[1] == "install":
                 print(f"Using {c.Fore.BLUE}GitHub{c.Style.RESET_ALL} for package search...")
-                if len(args) <= 2:
-                    split = input("[string] GitHub Repo (author/repo/branch): ").split(" ")
+                split = input("[string] GitHub Repo (author/repo/branch): ").split("/")
+                
+                author = split[0]
+                repo = split[1]
+                
+                if len(split) < 3:
+                    branch = "main"
+                else:
+                    branch = split[2]
                     
-                    author = split[0]
-                    repo = split[1]
-                    
-                    if len(split) < 3:
-                        branch = "main"
-                    else:
-                        branch = split[2]
-                        
-                    prg = f.progressBar(f"Installing package: {" ".join(split)}", 5, c.Fore.GREEN, c.Fore.LIGHTGREEN_EX, c.Fore.LIGHTBLUE_EX)
-                    
-                    try:
-                        data = requests.get(f"https://raw.githubusercontent.com/{author}/{repo}/{branch}/data.jsonc").content
+                prg = f.progressBar(f"Installing package: {" ".join(split)}", 2, c.Fore.GREEN, c.Fore.LIGHTGREEN_EX, c.Fore.LIGHTBLUE_EX)
+                
+                try:
+                    data = requests.get(f"https://raw.githubusercontent.com/{author}/{repo}/{branch}/data.jsonc").content
+                    if not os.path.exists(f"{homePath}/pkg"):
                         os.mkdir(f"{homePath}/pkg")
-                        with open(f"{homePath}/pkg/data.json", "w") as dataf:
-                            for v in data.split("\n"):
-                                if v != "" and not v.startswith("//"):
-                                    dataf.write(f"{v}\n")
+                    with open(f"{homePath}/pkg/data.json", "w") as dataf:
+                        for v in data.decode("utf-8").split("\n"):
+                            if v != "" and not v.startswith("//"):
+                                dataf.write(f"{v.split("//")[0]}\n")
+                    with open(f"{homePath}/pkg/data.json", "r") as dataf:
+                        data = json.load(dataf)
+                    prg.log("--- Package Data ---")
+                    prg.log(f"{c.Fore.BLUE}Name {c.Style.RESET_ALL}{data["name"]}")
+                    prg.log(f"{c.Fore.BLUE}Version {c.Style.RESET_ALL}{data["ver"]}")
+                    prg.log(f"{c.Fore.BLUE}Command Name {c.Style.RESET_ALL}{data["cmd"]}")
+                    if data["readme"]:
+                        temp = f"{c.Fore.GREEN}Yes{c.Style.RESET_ALL}"
+                    else:
+                        temp = f"{c.Fore.RED}No{c.Style.RESET_ALL}"
+                    prg.log(f"{c.Fore.BLUE}README installed {c.Style.RESET_ALL}{temp}")
+                    prg.log(f"{c.Fore.BLUE}Dependencies:{c.Style.RESET_ALL}")
+                    for v in data["pkg"]:
+                        prg.log(f"• {v}")
+                    if len(data["pkg"]) < 1:
+                        prg.log(f"• None")
+                    time.sleep(1)
+                    
+                    prg.increase(1)
+                    prg.log("Gathering Scripts")
+                    
+                    time.sleep(1.5)
+                    
+                    init = requests.get(f"https://raw.githubusercontent.com/{author}/{repo}/{branch}/__inst__.py").content.decode("utf-8")
+                    with open(f"{homePath}/pkg/cmd.py", "w") as initpy:
+                        initpy.write(init)
+                    
+                    with open(homePath + "/data/addonsdef.json", "r") as temp1:
+                        temp = json.load(temp1)
+
+                    temp2 = data["cmd"]
+
+                    with open(homePath + "/data/addonsdef.json", "w") as temp1:
+                        temp.append(temp2)
+                        temp1.write(json.dumps(temp))
                         
-                        datajs = "lol"
-                    except:
-                        prg.keyMode(False)
-                        prg.log(f"{c.Fore.RED}Failed to install package!{c.Style.RESET_ALL}")
-                print(f"")
+                    os.rename(f"{homePath}/pkg/cmd.py", f"{homePath}/addons/{temp2}.py")
+                    
+                    prg.increase(1)
+                    prg.log(f"{c.Fore.GREEN}Successfully installed package!{c.Style.RESET_ALL}")
+                except:
+                    prg.log(f"{c.Fore.RED}Failed to install package!{c.Style.RESET_ALL}")
+                finally:
+                    prg.keyMode(False)
+                    pass
+            elif args[1] == "uninstall":
+                noExec = True
+                toExec = "rmv reg"
         elif args[0] == "ctest":
             get = "http://httpbin.org/get"
             post = "http://httpbin.org/post"
@@ -622,17 +663,17 @@ while True:
                 prg.increase(6)
                 prg.setTitle("Reading addon dictionary")
                 rmv = input("[string] Command to remove: ")
-                f.upAndClear()
-                f.upAndClear()
-                f.upAndClear()
+                f._upAndClear()
+                f._upAndClear()
+                f._upAndClear()
                 prg.render()
                 prg.increase(7)
                 prg.setTitle("Editing addon dictionary")
                 temp = open(homePath + "/data/addonsdef.json")
                 temp1 = json.load(temp)
                 temp.close()
-                f.upAndClear()
-                f.upAndClear()
+                f._upAndClear()
+                f._upAndClear()
                 prg.render()
                 prg.increase(6)
                 prg.setTitle("Removing script file")
@@ -644,8 +685,8 @@ while True:
                         temp2.append(v)
                 temp.write(json.dumps(temp2))
                 temp.close()
-                f.upAndClear()
-                f.upAndClear()
+                f._upAndClear()
+                f._upAndClear()
                 prg.render()
                 prg.increase(1)
                 prg.setTitle("Removed registration for " + rmv)
@@ -653,8 +694,8 @@ while True:
                     os.remove(homePath + "/addons/" + rmv + ".py")
                 else:
                     raise Exception(f"{c.Fore.RED}Failed to delete addon script!{c.Style.RESET_ALL}")
-                f.upAndClear()
-                f.upAndClear()
+                f._upAndClear()
+                f._upAndClear()
                 prg.render()
                 prg.keyMode(False)
                 os.system(clearCmd)
@@ -850,10 +891,9 @@ while True:
         template = "ERR\nTYP: {0}\nARG: {1!r}"
         message = template.format(type(ex).__name__, ex.args)
         print(message)
-
         log("Exception: " + type(ex).__name__ + " {0!r}".format(ex.args), "ERROR")
-#    finally:
-#        print("")
+    finally:
+        pass
 
 if not cliExec:
     os.system(clearCmd)
