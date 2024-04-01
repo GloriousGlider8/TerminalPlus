@@ -37,6 +37,7 @@ pcname = os.getenv("COMPUTERNAME")
 domain = os.getenv("USERDOMAIN")
 uname = os.getenv("USERNAME")
 
+PREF_VER = d.py_ver
 ENVI = d.env
 VER = d.ver
 
@@ -110,7 +111,7 @@ log("User loaded program", "STARTUP")
 
 temp = c.Fore.YELLOW
 
-temp1 = [3, 12, 1]
+temp1 = PREF_VER
 
 temp2 = sys.version.split(" ")[0].split(".")
 
@@ -140,10 +141,10 @@ about = """
 
 --- About Terminal + ---
 
-Version: {19}_{18}_py3.12.1_usr
+Version: {19}_{18}_py{21}_usr
     System: {20}
     Terminal + Software Version: {18}
-    Intended Python Interpreter Version: {13}3.12.1{15}
+    Intended Python Interpreter Version: {13}{21}{15}
     Current Python Interpreter Version: {13}{14}{15}
     Terminal + Installation Type: User Account
 Terminal + HOME: {16}
@@ -176,7 +177,7 @@ NOTE: None of this is ever sent without your consent!
 **************************************************
 
 --- Terminal + ---
-""".format(os.getenv("USERNAME"), os.getenv("USERPROFILE"), os.getenv("APPDATA"), os.getenv("USERDOMAIN"), os.getenv("COMPUTERNAME"), os.getenv("SYSTEMDRIVE"), os.getenv("NUMBER_OF_PROCESSORS"), os.getenv("PROCESSOR_ARCHITECTURE"), os.getenv("PROCESSOR_IDENTIFIER"), os.getenv("PROCESSOR_LEVEL"), str(os.cpu_count()), ip, lip, temp, ".".join(temp2), c.Style.RESET_ALL, homePath, ENVI, VER, os.name.upper(), systemName)
+""".format(os.getenv("USERNAME"), os.getenv("USERPROFILE"), os.getenv("APPDATA"), os.getenv("USERDOMAIN"), os.getenv("COMPUTERNAME"), os.getenv("SYSTEMDRIVE"), os.getenv("NUMBER_OF_PROCESSORS"), os.getenv("PROCESSOR_ARCHITECTURE"), os.getenv("PROCESSOR_IDENTIFIER"), os.getenv("PROCESSOR_LEVEL"), str(os.cpu_count()), ip, lip, temp, ".".join(temp2), c.Style.RESET_ALL, homePath, ENVI, VER, os.name.upper(), systemName, str(temp1[0]) + "." + str(temp1[1]) + "." + str(temp1[2]))
 
 if not cliExec:
     print("--- Terminal + ---")
