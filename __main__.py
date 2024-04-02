@@ -816,7 +816,6 @@ while True:
                 clearLog()
         elif args[0] == "inst":
             if args[1] == "new":
-                print("\n--- Installation Setup ---\n")
                 if f.selPrompt(["Yes", "No"], [">", "<"], "Are you sure you would like to setup a new installation?") == 0:
                     runpy.run_path(homePath + "/code/newEnv.py")
                 print("\n--- Terminal + ---\n")
@@ -835,14 +834,14 @@ while True:
                 os.system(f"python \"{inst}\"/code")
             elif args[1] == "del":
                 if f.selPrompt([c.Fore.YELLOW + "Yes" + c.Style.RESET_ALL, "No"], ["!", "<"], "Are you sure you want to delete an installation?") == 0:
-                    print(c.Fore.BLUE + "Hint: MAIN is the installation that starts up and is installed by deafult." + c.Style.RESET_ALL)
+                    print(c.Fore.BLUE + "Hint: MAIN is the installation that starts up and is installed by default." + c.Style.RESET_ALL)
                     inst = input("[string] Installation name to delete: ")
                     temp = open(os.getenv("AppData") + "/TerminalPlus/" + inst + "/PATH")
                     instN = inst
                     inst = temp.read()
                     temp.close()
                     if f.selPrompt([c.Fore.RED + "Yes" + c.Style.RESET_ALL, "No"], ["!", "<"], "Are you really sure you want to delete the installation: " + instN + "?") == 0:
-                        print("Enter the installation name to delete.\n" + c.Fore.BLUE + "Deleteing an installation means that ALL files in the installation folder are deleted!" + c.Style.RESET_ALL)
+                        print("Enter the installation name to delete.\n" + c.Fore.BLUE + "Deleting an installation means that ALL files in the installation folder are deleted!" + c.Style.RESET_ALL)
                         print(c.Fore.CYAN + "Installation Name: " + instN + "\nInstallation Folder: " + inst + c.Style.RESET_ALL)
                         if input("3: ") != instN:
                             if input("2: ") != instN:
@@ -853,19 +852,21 @@ while True:
                         os.system(clearCmd)
                         print(f"Removed Installation {instN}")
             elif args[1] == "list":
-                temp = g.glob(os.getenv("AppData") + "/TerminalPlus/*")
+                temp = g.glob(os.path.join(os.getenv("AppData"), "TerminalPlus", "*"))
+                print("\n--- All Installations ---\n")
 
                 for v in temp:
-                    if v.removeprefix(os.getenv("AppData") + "/TerminalPlus/").find("/") == -1 and os.path.isdir(v) and v.removeprefix(os.getenv("AppData") + "/TerminalPlus/") != "SYS-CMD" and v.removeprefix(os.getenv("AppData") + "/TerminalPlus/") != "SYS-RES":
+                    if v.removeprefix(os.path.join(os.getenv("AppData"), "TerminalPlus")).find("/") == -1 and os.path.isdir(v) and v.removeprefix(os.path.join(os.getenv("AppData"), "TerminalPlus")) != "SYS-RES":
                         temp1 = open(v + "/PATH")
                         temp2 = temp1.read()
                         temp1.close()
-                        if v == f"{os.getenv("APPDATA")}/TerminalPlus/MAIN":
-                            print(f"{c.Fore.BLUE}PROTECTED{c.Style.RESET_ALL} [ENV] " + v.removeprefix(os.getenv("AppData") + "/TerminalPlus/") + " " + temp2)
+                        if v == os.path.join(os.getenv("AppData"), "TerminalPlus", "MAIN"):
+                            print(f"{c.Fore.GREEN}DEF{c.Style.RESET_ALL} [ENV] {v.removeprefix(os.path.join(os.getenv("AppData"), "TerminalPlus") + os.path.sep)} {temp2}")
                         elif os.path.exists(f"{v}/DEV"):
-                            print(f"{c.Fore.GREEN}DEV{c.Style.RESET_ALL} [ENV] " + v.removeprefix(os.getenv("AppData") + "/TerminalPlus/") + " " + temp2)
+                            print(f"{c.Fore.BLUE}DEV{c.Style.RESET_ALL} [ENV] {v.removeprefix(os.path.join(os.getenv("AppData"), "TerminalPlus") + os.path.sep)} {temp2}")
                         else:
-                            print("[ENV] " + v.removeprefix(os.getenv("AppData") + "/TerminalPlus/") + " " + temp2)
+                            print(f"{c.Fore.YELLOW}STD{c.Style.RESET_ALL} [ENV] {v.removeprefix(os.path.join(os.getenv("AppData"), "TerminalPlus") + os.path.sep)} {temp2}")
+                print("\n--- Terminal + ---\n")
         else:
             found = False
             temp = open(homePath + "/data/addonsdef.json")
